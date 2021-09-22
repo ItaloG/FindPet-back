@@ -1,0 +1,19 @@
+{
+  "name": "findpet_back",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ItaloG/FindPet-back.git"
+  },
+  "author": "Italo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ItaloG/FindPet-back/issues"
+  },
+  "homepage": "https://github.com/ItaloG/FindPet-back#readme"
+}
