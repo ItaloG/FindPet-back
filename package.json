@@ -15,5 +15,14 @@
   "bugs": {
     "url": "https://github.com/ItaloG/FindPet-back/issues"
   },
-  "homepage": "https://github.com/ItaloG/FindPet-back#readme"
+  "homepage": "https://github.com/ItaloG/FindPet-back#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mysql2": "^2.3.0",
+    "sequelize": "^6.6.5",
+    "sequelize-cli": "^6.2.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.13"
+  }
 }
