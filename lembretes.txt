@@ -1,0 +1,5 @@
+for (let assoc of Object.kyes(Category.associations)){
+    for (let accessor of Object.keys(Category.associations[assoc].accessors)) {
+        console.log(Category.name + '.' + Category.associations[assoc].accessors[accessor] + '()');
+    }
+}
