@@ -7,8 +7,7 @@ class Institution extends Model {
         nome: DataTypes.STRING,
         email: DataTypes.STRING,
         senha: DataTypes.STRING,
-        cpf: DataTypes.STRING,
-        urlFoto: DataTypes.STRING,
+        cnpj: DataTypes.STRING,
       },
       {
         sequelize: connection,

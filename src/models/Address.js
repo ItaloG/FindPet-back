@@ -1,10 +1,13 @@
 const { Model, DataTypes } = require("sequelize");
 
-class Cep extends Model {
+class Address extends Model {
   static init(connection) {
     super.init(
       {
-        cep: DataTypes.STRING,
+        rua: DataTypes.STRING,
+        cpf: DataTypes.STRING,
+        numero: DataTypes.INTEGER,
+        complemento: DataTypes.STRING,
       },
       {
         sequelize: connection,
