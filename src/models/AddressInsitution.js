@@ -7,6 +7,7 @@ class AddressInstitution extends Model {
         logradouro: DataTypes.STRING,
         numero: DataTypes.INTEGER,
         complemento: DataTypes.STRING,
+        cep_id: DataTypes.INTEGER,
       },
       {
         sequelize: connection,
