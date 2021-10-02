@@ -1,10 +1,11 @@
 const { Model, DataTypes } = require("sequelize");
 
-class TypeInstitution extends Model {
+
+class Cep extends Model {
     static init(connection) {
         super.init(
             {
-                tipoDeIstituicao: DataTypes.STRING,
+                cep: DataTypes.STRING,
             },
             {
                 sequelize: connection,
@@ -12,8 +13,8 @@ class TypeInstitution extends Model {
         );
     }
     static associate(models) {
-        this.hasMany(models.Institution);
+        this.hasMany(models.AddressInstitution);
     }
 }
 
-module.exports = TypeInstitution;
+module.exports = Cep;

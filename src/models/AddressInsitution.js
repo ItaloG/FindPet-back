@@ -1,11 +1,10 @@
 const { Model, DataTypes } = require("sequelize");
 
-class Address extends Model {
+class AddressInstitution extends Model {
   static init(connection) {
     super.init(
       {
-        rua: DataTypes.STRING,
-        cpf: DataTypes.STRING,
+        logradouro: DataTypes.STRING,
         numero: DataTypes.INTEGER,
         complemento: DataTypes.STRING,
       },
@@ -14,5 +13,10 @@ class Address extends Model {
       }
     );
   }
-  static associate
+  static associate(models) {
+    this.belongsTo(models.Institution);
+    this.belongsTo(models.Cep);
+  }
 }
+
+module.exports = AddressInstitution;

@@ -15,7 +15,9 @@ class Institution extends Model {
     );
   }
   static associate(models) {
-    this.hasMany(models.Telephone);
+    this.belongsTo(models.TypeInstitution);
+    this.hasMany(models.TlephoneInstitution);
+    this.hasMany(models.AddresInstitution);
   }
 }
 module.exports = Institution;
