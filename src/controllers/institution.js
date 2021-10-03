@@ -20,7 +20,7 @@ module.exports = {
       telefone,
       celular,
       cep,
-      rua,
+      logradouro,
       numero,
       complemento,
     } = req.body;
@@ -85,7 +85,7 @@ module.exports = {
       }
 
       let address = await newInstitution.createAddressInstitution({
-        logradouro: rua,
+        logradouro,
         numero,
         complemento,
         cep_id: newCep.id
