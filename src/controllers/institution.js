@@ -1,13 +1,10 @@
 const Institution = require("../models/institution");
 const bcrypt = require("bcryptjs");
-const AddressInstitution = require("../models/AddressInsitution");
 const Cep = require("../models/Cep");
 
 module.exports = {
   async index(req, res) {
-    const user = { name: "elais", email: "elasi@gmail.com", password: "123" };
 
-    res.status(200).send(user);
   },
 
   async store(req, res) {
@@ -25,6 +22,11 @@ module.exports = {
       complemento,
     } = req.body;
 
+    //validar celular, telefone
+
+    if (!nome || tipoEstabelecimento === 0 || !email || !senha || !cnpj || !cep || !logradouro || !numero ) {
+      return res.status(400).send({ error: "Faltam alguns dados." })
+  }
 
     try {
 
@@ -37,7 +39,7 @@ module.exports = {
       if (institution) {
         return res
           .status(400)
-          .send({ error: "Este e-mail está ja está sendo utilizado" });
+          .send({ error: "Este e-mail ja está está sendo utilizado." });
       }
 
       const senhaHashed = bcrypt.hashSync(senha);
@@ -55,10 +57,6 @@ module.exports = {
       if (!newInstitution) {
         return res.status(404).send({ error: "Instituição não encontrada" });
       }
-
-      // let TypeInstitution = await newInstitution.createTypeInstitution({
-      //   tipoDeInstituicao: tipoEstabelecimento,
-      // })
 
       let telephone = await newInstitution.createTelephoneInstitution({
         numero: telefone,
@@ -97,7 +95,7 @@ module.exports = {
         senha: institution.senha,
         cnpj: institution.cnpj,
         tipoEstab: tipoEstabelecimento,
-        tell: telefone,
+        tell: telephone,
         cell: cellphone.numero,
         rua: address.logradouro,
         num: address.numero,
