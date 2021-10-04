@@ -5,6 +5,26 @@ const Cep = require("../models/Cep");
 module.exports = {
   async index(req, res) {
 
+    try {
+      const institutions = await Institution.findAll({
+        attributes: [
+          "id",
+          "nome",
+          "type_institution_id"
+        ],
+        include: [{
+          association: "TypeInstitution",
+          attributes: [ "type_institution"]
+        }]
+      });
+
+      res.send(institutions);
+
+    } catch (error) {
+      console.log(error);
+      res.status(500).send({ error });
+    }
+
   },
 
   async store(req, res) {
@@ -24,9 +44,9 @@ module.exports = {
 
     //validar celular, telefone
 
-    if (!nome || tipoEstabelecimento === 0 || !email || !senha || !cnpj || !cep || !logradouro || !numero ) {
+    if (!nome || tipoEstabelecimento === 0 || !email || !senha || !cnpj || !cep || !logradouro || !numero) {
       return res.status(400).send({ error: "Faltam alguns dados." })
-  }
+    }
 
     try {
 
