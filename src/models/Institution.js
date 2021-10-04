@@ -18,6 +18,8 @@ class Institution extends Model {
   static associate(models) {
     this.hasMany(models.TelephoneInstitution);
     this.hasMany(models.AddressInstitution);
+    this.belongsTo(models.TypeInstitution);
   }
 }
+
 module.exports = Institution;
