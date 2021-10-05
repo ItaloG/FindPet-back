@@ -5,6 +5,10 @@ module.exports = {
   async store(req, res) {
     const { email, senha } = req.body;
 
+    if (!email || !senha) {
+      return res.status(400).send({ error: "Faltam dados." });
+    }
+
     try {
       const user = await User.findOne({
         where: {
@@ -24,7 +28,6 @@ module.exports = {
           },
         });
       }, 3000);
-      
     } catch (error) {
       console.log(error);
       res.status(500).send(error);

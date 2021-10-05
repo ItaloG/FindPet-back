@@ -4,7 +4,20 @@ const Cep = require("../models/Cep");
 
 module.exports = {
   async index(req, res) {
+    const institutions = await Institution.findAll({
+      attributes: ["id", "nome"],
+      include: [
+        {
+          association: "TypeInstitution",
+          attributes: ["type_institution"],
+        },
+      ],
+      order: [["created_at", "DESC"]],
+    });
 
+    res.status(200).send({
+      institutions,
+    });
   },
 
   async store(req, res) {
@@ -24,12 +37,20 @@ module.exports = {
 
     //validar celular, telefone
 
-    if (!nome || tipoEstabelecimento === 0 || !email || !senha || !cnpj || !cep || !logradouro || !numero ) {
-      return res.status(400).send({ error: "Faltam alguns dados." })
-  }
+    if (
+      !nome ||
+      tipoEstabelecimento === 0 ||
+      !email ||
+      !senha ||
+      !cnpj ||
+      !cep ||
+      !logradouro ||
+      !numero
+    ) {
+      return res.status(400).send({ error: "Faltam alguns dados." });
+    }
 
     try {
-
       let institution = await Institution.findOne({
         where: {
           email: email,
@@ -49,7 +70,7 @@ module.exports = {
         email,
         senha: senhaHashed,
         cnpj,
-        type_institution_id: tipoEstabelecimento
+        type_institution_id: tipoEstabelecimento,
       });
 
       let newInstitution = await Institution.findByPk(institution.id);
@@ -60,25 +81,25 @@ module.exports = {
 
       let telephone = await newInstitution.createTelephoneInstitution({
         numero: telefone,
-      })
+      });
 
-      let cellphone = ""
+      let cellphone = "";
 
       if (celular) {
         cellphone = await newInstitution.createTelephoneInstitution({
-          numero: celular
+          numero: celular,
         });
       }
 
       let newCep = await Cep.findOne({
         where: {
           cep: cep,
-        }
-      })
+        },
+      });
 
       if (!newCep) {
         newCep = await Cep.create({
-          cep
+          cep,
         });
       }
 
@@ -86,7 +107,7 @@ module.exports = {
         logradouro,
         numero,
         complemento,
-        cep_id: newCep.id
+        cep_id: newCep.id,
       });
 
       res.status(201).send({
@@ -100,9 +121,8 @@ module.exports = {
         rua: address.logradouro,
         num: address.numero,
         comp: address.complemento,
-        seuCep: newCep.cep
+        seuCep: newCep.cep,
       });
-
     } catch (error) {
       console.log(error);
       res.status(500).send(error);

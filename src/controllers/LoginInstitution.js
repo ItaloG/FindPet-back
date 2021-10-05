@@ -5,6 +5,10 @@ module.exports = {
   async store(req, res) {
     const { email, senha } = req.body;
 
+    if (!email || !senha) {
+      return res.status(400).send({ error: "Faltam dados." });
+    }
+
     try {
       const institution = await Institution.findOne({
         where: {
