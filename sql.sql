@@ -36,6 +36,8 @@ create table institutions (
 	senha varchar(80) not null,
     cnpj varchar(255) not null,
     email varchar(80) not null,
+    url_foto_perfil text,
+    url_foto_banner text,
     descricao text,
     created_at date,
     updated_at date,

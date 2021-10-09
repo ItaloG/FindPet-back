@@ -4,31 +4,22 @@ const Cep = require("../models/Cep");
 
 module.exports = {
   async index(req, res) {
-    const institutions = await Institution.findAll({
-      attributes: ["id", "nome"],
-      include: [
-        {
-          association: "TypeInstitution",
-          attributes: ["type_institution"],
-        },
-      ],
-      order: [["created_at", "DESC"]],
-    });
 
     try {
       const institutions = await Institution.findAll({
-        attributes: [
-          "id",
-          "nome",
-          "type_institution_id"
+        attributes: ["id", "nome"],
+        include: [
+          {
+            association: "TypeInstitution",
+            attributes: ["type_institution"],
+          },
         ],
-        include: [{
-          association: "TypeInstitution",
-          attributes: [ "type_institution"]
-        }]
+        order: [["created_at", "DESC"]],
       });
-
-      res.send(institutions);
+  
+      res.status(200).send({
+        institutions,
+      });
 
     } catch (error) {
       console.log(error);
