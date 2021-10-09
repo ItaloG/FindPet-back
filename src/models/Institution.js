@@ -21,4 +21,5 @@ class Institution extends Model {
     this.belongsTo(models.TypeInstitution);
   }
 }
+
 module.exports = Institution;
