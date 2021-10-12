@@ -2,7 +2,7 @@ const routes = require("express").Router();
 
 const institutionController = require("./controllers/institution");
 const userController = require("./controllers/user");
-const loginUserContoller = require("./controllers/LoginUser");
+const loginContoller = require("./controllers/Login");
 const imagePerfilInstitutionController = require("./controllers/institutionImagePerfil");
 const uploadSingleImage = require("./middlewares/uploadSingleImage");
 const imageBannerInstitutionController = require("./controllers/institutionImageBanner");
@@ -14,7 +14,7 @@ routes.post("/instituicoes/:id/perfil", uploadSingleImage, imagePerfilInstitutio
 routes.post("/instituicoes/:id/banner", uploadSingleImage, imageBannerInstitutionController.store);
 routes.post("/instituicoes/:id/descricao", descriptionInstitutionController.store);
 
-routes.post("/login/usuario", loginUserContoller.store);
+routes.post("/login", loginContoller.store);
 routes.post("/cadastro/usuario", userController.store);
 
 

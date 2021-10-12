@@ -1,6 +1,8 @@
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const Cep = require("../models/Cep");
+const jwt = require("jsonwebtoken");
+const auth = require("../config/auth");
 
 module.exports = {
     async store(req, res) {
@@ -17,7 +19,7 @@ module.exports = {
             complemento
         } = req.body;
 
-        if (!nome || !email || !senha || !cpf || !cep || !logradouro || !numero ) {
+        if (!nome || !email || !senha || !cpf || !cep || !logradouro || !numero) {
             return res.status(400).send({ error: "Faltam alguns dados." })
         }
 
@@ -95,6 +97,12 @@ module.exports = {
                 cellphone = cellphone.numero;
             }
 
+            const token = jwt.sign({
+                userId: user.id
+            },
+                auth.secret, {
+                expiresIn: "24h"
+            });
 
             res.status(201).send({
                 nome: user.nome,
@@ -105,7 +113,8 @@ module.exports = {
                 rua: user.logradouro,
                 num: user.numero,
                 comp: user.complemento,
-                seuCep: newCep.cep
+                seuCep: newCep.cep,
+                token,
             });
 
         } catch (error) {
