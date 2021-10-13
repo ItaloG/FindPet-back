@@ -103,3 +103,39 @@ create table ceps (
     created_at date,
     updated_at date
 );
+
+create table supports (
+	id int not null auto_increment primary key,
+    urgency_id int not null,
+    institution_id int not null,
+    type_support_id int not null,
+    valor float,
+    idade_minima int,
+    horario time,
+    descricao varchar(255) not null,
+    created_at datetime,
+    updated_at datetime,
+    constraint FK_urgencies_supports
+    foreign key (urgency_id)
+    references urgencies (id),
+    constraint FK_institutions_supports
+    foreign key (institution_id)
+    references institutions (id),
+    constraint FK_typeSupports_supports
+    foreign key (type_support_id)
+    references type_supports (id)
+);
+	
+create table type_supports (
+	id int not null auto_increment primary key,
+    tipo varchar(255) not null,
+    created_at datetime,
+    updated_at datetime
+);
+    
+create table urgencies (
+	id int not null auto_increment primary key,
+    urgencia varchar(50) not null,
+    created_at datetime,
+    updated_at datetime
+);
