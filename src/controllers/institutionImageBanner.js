@@ -14,7 +14,7 @@ module.exports = {
         institution.save();
 
         res.status(201).send({
-            id,
+            instituicaoId: id,
             image: req.file.filename
         });
     },

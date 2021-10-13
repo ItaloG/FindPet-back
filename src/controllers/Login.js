@@ -31,7 +31,7 @@ module.exports = {
         }
 
         const token = jwt.sign({
-          institutionId: institution.id
+          perfil: "institution"
         },
           auth.secret, {
           expiresIn: "24h"
@@ -54,7 +54,7 @@ module.exports = {
       }
 
       const token = jwt.sign({
-        userId: user.id
+        perfil: "user"
       },
         auth.secret, {
         expiresIn: "24h"
