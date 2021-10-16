@@ -11,11 +11,13 @@ const imagePerfilInstitutionController = require("./controllers/institutionImage
 const imageBannerInstitutionController = require("./controllers/institutionImageBanner");
 const descriptionInstitutionController = require("./controllers/institutionDescription");
 const supportController = require("./controllers/support");
+const typeInstitution = require("./controllers/typeInstitution");
 
 //rotas publicas
 routes.post("/login", loginContoller.store);
 routes.post("/cadastro/usuario", userController.store);
 routes.post("/cadastro/instituicao", institutionController.store);
+routes.get("/tipoInstituicoes", typeInstitution.index);
 
 //rotas privadas
 routes.use(authUser);
