@@ -21,6 +21,7 @@ class Institution extends Model {
   static associate(models) {
     this.hasMany(models.TelephoneInstitution);
     this.hasMany(models.AddressInstitution);
+    this.hasMany(models.Support);
     this.belongsTo(models.TypeInstitution);
   }
 }

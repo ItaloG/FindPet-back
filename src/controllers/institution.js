@@ -30,6 +30,29 @@ module.exports = {
 
   },
 
+  async find(req, res) {
+    const { id } = req.params;
+
+    try {
+      const institution = await Institution.findByPk(id, {
+        attributes: ["id", "nome"],
+        include: [
+          {
+            association: "TypeInstitution",
+            attributes: ["type_institution"],
+          },
+        ]
+      });
+
+      res.status(200).send({
+        institution,
+      });
+    } catch (error) {
+      console.log(error);
+      res.status(500).send(error);
+    }
+  },
+
   async store(req, res) {
     const {
       nome,
@@ -156,7 +179,7 @@ module.exports = {
         seuCep: newCep.cep,
         token,
       });
-      
+
     } catch (error) {
       console.log(error);
       res.status(500).send(error);

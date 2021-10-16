@@ -20,8 +20,8 @@ create table users (
     logradouro varchar(40) not null,
     numero int not null,
     complemento varchar(100) not null,
-    created_at date,
-    updated_at date,
+    created_at datetime,
+    updated_at datetime,
     unique key (id),
     constraint FK_Ceps_Users
     foreign key (cep_id)
@@ -39,8 +39,8 @@ create table institutions (
     url_foto_perfil text,
     url_foto_banner text,
     descricao text,
-    created_at date,
-    updated_at date,
+    created_at datetime,
+    updated_at datetime,
     unique key (id),
     constraint FK_Typeinstitutions_Institutions
     foreign key (type_institution_id)
@@ -54,8 +54,8 @@ create table address_institutions (
     logradouro  varchar(40) not null,
     numero  int not null,
     complemento  varchar(100) not null,
-    created_at date,
-    updated_at date,
+    created_at datetime,
+    updated_at datetime,
     unique key (id),
     constraint FK_Cep_Addressinstitutions
 	foreign key (cep_id)
@@ -69,8 +69,8 @@ create table telephone_institutions (
 	id int  not null auto_increment primary key,
     numero  varchar(255) not null,
     institution_id int not null,
-    created_at date,
-    updated_at date,
+    created_at datetime,
+    updated_at datetime,
     unique key (id),
     constraint FK_Institution_Telephoneinstitutions
     foreign key (institution_id)
@@ -82,8 +82,8 @@ create table telephone_users (
 	id int not null auto_increment primary key,
     numero  varchar(255) not null,
 	user_id int not null,
-    created_at date,
-    updated_at date,
+    created_at datetime,
+    updated_at datetime,
     unique key (id),
     constraint FK_Users_Telephone_users
     foreign key (user_id)
@@ -93,15 +93,15 @@ create table telephone_users (
 create table typeinstitutions (
 	id int not null auto_increment primary key,
     type_institution  varchar(255) not null,
-    created_at date,
-    updated_at date
+    created_at datetime,
+    updated_at datetime
 );
 
 create table ceps (
 	id int not null auto_increment primary key,
     cep varchar(255) not null,
-    created_at date,
-    updated_at date
+    created_at datetime,
+    updated_at datetime
 );
 
 create table supports (
