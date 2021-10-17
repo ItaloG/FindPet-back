@@ -6,6 +6,12 @@ INSERT INTO `typeinstitutions` (`type_institution`, `created_at`, `updated_at`) 
 INSERT INTO `typeinstitutions` (`type_institution`, `created_at`, `updated_at`) VALUES ('VETERINARIO', curdate(), curdate());
 INSERT INTO `typeinstitutions` (`type_institution`, `created_at`, `updated_at`) VALUES ('PETSHOP', curdate(), curdate());
 
+#Cadastro de tipos de apoio
+INSERT INTO `type_supports` (`tipo`, `created_at`, `updated_at`) VALUES ('RAÇÂO', current_timestamp(), current_timestamp());
+INSERT INTO `type_supports` (`tipo`, `created_at`, `updated_at`) VALUES ('REMÉDIOS', current_timestamp(), current_timestamp());
+INSERT INTO `type_supports` (`tipo`, `created_at`, `updated_at`) VALUES ('COSMÉTICOS', current_timestamp(), current_timestamp());
+INSERT INTO `type_supports` (`tipo`, `created_at`, `updated_at`) VALUES ('VOLUNTÁRIO', current_timestamp(), current_timestamp());
+
 
 use findpet_db;
 
@@ -106,18 +112,15 @@ create table ceps (
 
 create table supports (
 	id int not null auto_increment primary key,
-    urgency_id int not null,
     institution_id int not null,
     type_support_id int not null,
     valor float,
     idade_minima int,
-    horario time,
+    horario varchar(255),
+    urgencia boolean not null,
     descricao varchar(255) not null,
     created_at datetime,
     updated_at datetime,
-    constraint FK_urgencies_supports
-    foreign key (urgency_id)
-    references urgencies (id),
     constraint FK_institutions_supports
     foreign key (institution_id)
     references institutions (id),
@@ -133,9 +136,3 @@ create table type_supports (
     updated_at datetime
 );
     
-create table urgencies (
-	id int not null auto_increment primary key,
-    urgencia varchar(50) not null,
-    created_at datetime,
-    updated_at datetime
-);
