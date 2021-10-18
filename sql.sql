@@ -1,10 +1,10 @@
 #comando para criar o banco: npx sequelize db:create
 
 #Antes de fazer um cadastro de instituiçao. Fazer esses INSERTS:
-INSERT INTO `typeinstitutions` (`type_institution`, `created_at`, `updated_at`) VALUES ('ONG', curdate(), curdate());
-INSERT INTO `typeinstitutions` (`type_institution`, `created_at`, `updated_at`) VALUES ('CANIL', curdate(), curdate());
-INSERT INTO `typeinstitutions` (`type_institution`, `created_at`, `updated_at`) VALUES ('VETERINARIO', curdate(), curdate());
-INSERT INTO `typeinstitutions` (`type_institution`, `created_at`, `updated_at`) VALUES ('PETSHOP', curdate(), curdate());
+INSERT INTO `type_institutions` (`type_institution`, `created_at`, `updated_at`) VALUES ('ONG', curdate(), curdate());
+INSERT INTO `type_institutions` (`type_institution`, `created_at`, `updated_at`) VALUES ('CANIL', curdate(), curdate());
+INSERT INTO `type_institutions` (`type_institution`, `created_at`, `updated_at`) VALUES ('VETERINARIO', curdate(), curdate());
+INSERT INTO `type_institutions` (`type_institution`, `created_at`, `updated_at`) VALUES ('PETSHOP', curdate(), curdate());
 
 #Cadastro de tipos de apoio
 INSERT INTO `type_supports` (`tipo`, `created_at`, `updated_at`) VALUES ('RAÇÂO', current_timestamp(), current_timestamp());
@@ -50,7 +50,7 @@ create table institutions (
     unique key (id),
     constraint FK_Typeinstitutions_Institutions
     foreign key (type_institution_id)
-    references typeinstitutions (id)
+    references type_institutions (id)
 );
 
 create table address_institutions (
@@ -96,7 +96,7 @@ create table telephone_users (
     references users (id)
 );
 
-create table typeinstitutions (
+create table type_institutions (
 	id int not null auto_increment primary key,
     type_institution  varchar(255) not null,
     created_at datetime,
