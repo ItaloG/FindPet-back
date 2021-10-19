@@ -15,6 +15,7 @@ class Cep extends Model {
     static associate(models) {
         this.hasMany(models.AddressInstitution);
         this.hasMany(models.User);
+        this.hasMany(models.Campaigns);
     }
 }
 

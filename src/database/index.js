@@ -10,6 +10,7 @@ const TelephoneUser = require("../models/TelephoneUser");
 const TypeInstitution = require("../models/TypeInstitution");
 const TypeSupport = require("../models/TypeSupport");
 const User = require("../models/User");
+const Campaigns = require("../models/Campaigns");
 
 const connection = new Sequelize(dbConfig.url, dbConfig.config);
 
@@ -22,6 +23,7 @@ TelephoneUser.init(connection);
 TypeInstitution.init(connection);
 Support.init(connection);
 TypeSupport.init(connection);
+Campaigns.init(connection);
 
 Institution.associate(connection.models);
 TelephoneInstitution.associate(connection.models);
@@ -32,6 +34,7 @@ User.associate(connection.models);
 TypeInstitution.associate(connection.models);
 Support.associate(connection.models);
 TypeSupport.associate(connection.models);
+Campaigns.associate(connection.models)
 
 // for (let assoc of Object.kyes(Category.associations)){
 //     for (let accessor of Object.keys(Category.associations[assoc].accessors)) {

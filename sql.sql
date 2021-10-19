@@ -65,7 +65,7 @@ create table address_institutions (
     unique key (id),
     constraint FK_Cep_Addressinstitutions
 	foreign key (cep_id)
-    references cep (id),
+    references ceps (id),
     constraint FK_Institutions_Addressinstitutions
     foreign key (institution_id)
     references institutions (id)
@@ -134,5 +134,28 @@ create table type_supports (
     tipo varchar(255) not null,
     created_at datetime,
     updated_at datetime
+);
+
+
+create table campaigns (
+	id int not null auto_increment primary key,
+    institution_id int not null,
+    cep_id int not null,
+    numero int not null,
+    logradouro varchar(255) not null,
+    complemento varchar(255) not null,
+	url_foto varchar(255) not null,
+    titulo varchar(255) not null,
+    descricao varchar(255) not null,
+    data_inicio date not null,
+    data_fim date not null,
+    hora_inicio time not null,
+    hora_fim time not null,
+    constraint FK_institutions_campaings
+    foreign key (institution_id)
+    references institutions (id),
+    constraint FK_ceps_campaigns
+	foreign key (cep_id)
+    references ceps (id)
 );
     

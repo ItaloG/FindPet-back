@@ -23,6 +23,7 @@ class Institution extends Model {
     this.hasMany(models.AddressInstitution);
     this.hasMany(models.Support);
     this.belongsTo(models.TypeInstitution);
+    this.hasMany(models.Campaigns);
   }
 }
 

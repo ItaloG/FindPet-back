@@ -13,6 +13,7 @@ const imageBannerInstitutionController = require("./controllers/institutionImage
 const descriptionInstitutionController = require("./controllers/institutionDescription");
 const supportController = require("./controllers/support");
 const typeInstitution = require("./controllers/typeInstitution");
+const campaignsController = require("./controllers/campaigns");
 
 //rotas publicas
 routes.post("/login", loginContoller.store);
@@ -31,9 +32,12 @@ routes.get("/instituicoes", institutionController.index);
 routes.get("/instituicoes/:id", institutionController.find);
 routes.get("/apoios", supportController.index);
 routes.get("/apoios/:id", supportController.find);
+
+routes.post("/apoios/:id", supportController.store);
+
 routes.post("/instituicoes/:id/perfil", uploadSingleImage, uploadFirebase, imagePerfilInstitutionController.store);
 routes.post("/instituicoes/:id/banner", uploadSingleImage, uploadFirebase, imageBannerInstitutionController.store);
 routes.post("/instituicoes/:id/descricao", descriptionInstitutionController.store);
-routes.post("/apoios/:id", supportController.store);
+routes.post("/campanhas", uploadSingleImage, uploadFirebase, campaignsController.store);
 
 module.exports = routes;

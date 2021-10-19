@@ -19,6 +19,7 @@ module.exports = async (req, res, next) => {
     try {
         const response = await jwt.verify(token, secret);
 
+        req.institutionId = response.institutionId;
         req.userPerfil = response.perfil;
     } catch (e) {
         console.error(e);
