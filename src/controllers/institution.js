@@ -9,7 +9,7 @@ module.exports = {
 
     try {
       const institutions = await Institution.findAll({
-        attributes: ["id", "nome"],
+        attributes: ["id", "nome", "url_foto_perfil", "url_foto_banner"],
         include: [
           {
             association: "TypeInstitution",

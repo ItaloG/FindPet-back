@@ -1,6 +1,7 @@
 const routes = require("express").Router();
 
 const uploadSingleImage = require("./middlewares/uploadSingleImage");
+const uploadFirebase = require("./services/uploadFirebase");
 const authUser =  require("./middlewares/authUser");
 const authInstitution = require("./middlewares/authInstitution");
 
@@ -30,8 +31,8 @@ routes.get("/instituicoes", institutionController.index);
 routes.get("/instituicoes/:id", institutionController.find);
 routes.get("/apoios", supportController.index);
 routes.get("/apoios/:id", supportController.find);
-routes.post("/instituicoes/:id/perfil", uploadSingleImage, imagePerfilInstitutionController.store);
-routes.post("/instituicoes/:id/banner", uploadSingleImage, imageBannerInstitutionController.store);
+routes.post("/instituicoes/:id/perfil", uploadSingleImage, uploadFirebase, imagePerfilInstitutionController.store);
+routes.post("/instituicoes/:id/banner", uploadSingleImage, uploadFirebase, imageBannerInstitutionController.store);
 routes.post("/instituicoes/:id/descricao", descriptionInstitutionController.store);
 routes.post("/apoios/:id", supportController.store);
 
