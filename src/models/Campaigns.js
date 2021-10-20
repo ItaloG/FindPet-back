@@ -15,6 +15,7 @@ class Campaigns extends Model {
                 hora_inicio: DataTypes.TIME,
                 hora_fim: DataTypes.TIME,
                 cep_id: DataTypes.INTEGER,
+                institution_id: DataTypes.INTEGER,
             },
             {
                 sequelize: connection,

@@ -1,3 +1,8 @@
+const Institution = require("../models/institution");
+const Cep = require("../models/Cep");
+const Campaigns = require("../models/Campaigns");
+
+
 module.exports = {
   async store(req, res) {
     const {
@@ -17,19 +22,66 @@ module.exports = {
 
     const { institutionId } = req;
 
-    res.status(200).send({ 
-        titulo,
-        cep,
+    if (
+      !titulo ||
+      !descricao ||
+      !data_inicio ||
+      !data_fim ||
+      !hora_inicio ||
+      !hora_fim ||
+      !cep ||
+      !logradouro ||
+      !numero
+    ) {
+      return res.status(400).send({ error: "Faltam alguns dados." });
+    }
+
+    if (!firebaseUrl) {
+      return res.status(400).send({ error: "Campo imagem é obrigatório" });
+    }
+
+    try {
+      let institution = await Institution.findByPk(institutionId);
+
+      if (!institution)
+        return res.status(404).send({ error: "Instituição não encontrada" });
+
+      let newCep = await Cep.findOne({
+        where: {
+          cep: cep,
+        },
+      });
+
+      if (!newCep) {
+        newCep = await Cep.create({
+          cep,
+        });
+      }
+
+      const campanha = await Campaigns.create({
         numero,
         logradouro,
         complemento,
+        url_foto: firebaseUrl,
+        titulo,
         descricao,
         data_inicio,
         data_fim,
         hora_inicio,
         hora_fim,
-        firebaseUrl,
-        institutionId,
-     });
+        cep_id: newCep.id,
+        institution_id: institutionId,
+      });
+
+      res.status(200).send({
+        campanha,
+      });
+
+    } catch (error) {
+      
+      console.log(error);
+      res.status(500).send(error);
+    
+    }
   },
 };
