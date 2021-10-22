@@ -160,4 +160,59 @@ create table campaigns (
 	foreign key (cep_id)
     references ceps (id)
 );
-    
+
+create table special_condition(
+	id int not null auto_increment primary key,
+    condicao varchar(255) not null,
+	created_at datetime,
+    updated_at datetime
+);
+
+create table type_animals(
+	id int not null auto_increment primary key,
+    tipo varchar(255) not null,
+	created_at datetime,
+    updated_at datetime
+);
+
+create table institution_animals(
+	id int not null auto_increment primary key,
+    institution_id int not null,
+    animal_id int not null,
+    created_at datetime,
+    updated_at datetime,
+    constraint FK_institutions_institution_animals
+    foreign key (institution_id)
+    references institutions (id),
+    constraint FK_animals_institution_animals
+    foreign key (animal_id)
+    references animals (id)
+);
+
+create table animal_special_conditions(
+	id int not null auto_increment primary key,
+    animal_id int not null,
+    special_condition_id int not null,
+	created_at datetime,
+    updated_at datetime,
+    constraint FK_animals_animal_special_conditions
+    foreign key (animal_id)
+    references animals (id),
+    constraint FK_special_condition_animal_special_conditions
+    foreign key (special_condition_id)
+    references special_condition (id)
+);
+
+create table animals(
+	id int not null auto_increment primary key,
+    type_animal_id int not null,
+    url_foto_perfil text not null,
+    nome varchar(255) not null,
+    personalidade varchar(255),
+    idade int,
+    castrado boolean not null,
+    historia varchar(255) not null,
+    constraint FK_type_animals_animals
+    foreign key (type_animal_id)
+    references type_animals (id)
+);
