@@ -2,7 +2,7 @@ const routes = require("express").Router();
 
 const uploadSingleImage = require("./middlewares/uploadSingleImage");
 const uploadFirebase = require("./services/uploadFirebase");
-const authUser =  require("./middlewares/authUser");
+const authUser = require("./middlewares/authUser");
 const authInstitution = require("./middlewares/authInstitution");
 
 const institutionController = require("./controllers/institution");
@@ -25,16 +25,15 @@ routes.get("/tipoInstituicoes", typeInstitution.index);
 routes.use(authUser);
 routes.get("/instituicoes", institutionController.index);
 
-
 routes.use(authInstitution);
-
 routes.get("/instituicoes", institutionController.index);
 routes.get("/instituicoes/:id", institutionController.find);
 routes.get("/apoios", supportController.index);
 routes.get("/apoios/:id", supportController.find);
+routes.get("/campanhas", campaignsController.index);
+routes.get("/campanhas/:id", campaignsController.find);
 
 routes.post("/apoios/:id", supportController.store);
-
 routes.post("/instituicoes/:id/perfil", uploadSingleImage, uploadFirebase, imagePerfilInstitutionController.store);
 routes.post("/instituicoes/:id/banner", uploadSingleImage, uploadFirebase, imageBannerInstitutionController.store);
 routes.post("/instituicoes/:id/descricao", descriptionInstitutionController.store);

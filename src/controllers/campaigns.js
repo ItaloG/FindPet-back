@@ -2,8 +2,37 @@ const Institution = require("../models/institution");
 const Cep = require("../models/Cep");
 const Campaigns = require("../models/Campaigns");
 
-
 module.exports = {
+
+  async index(req, res) {
+
+    try {
+      const campaigns = await Campaigns.findAll({
+        order: [["created_at", "DESC"]]
+      });
+
+      res.status(200).send([campaigns]);
+
+    } catch (error) {
+      console.log(error);
+      res.status(500).send({ error });
+    }
+
+  },
+  async find(req, res) {
+    const { id } = req.params;
+
+    try {
+      const campaign = await Campaigns.findByPk(id);
+
+      res.status(200).send([campaign]);
+
+    } catch (error) {
+      console.log(error);
+      res.status(500).send(error);
+    }
+
+  },
   async store(req, res) {
     const {
       titulo,
@@ -48,7 +77,7 @@ module.exports = {
 
       let newCep = await Cep.findOne({
         where: {
-          cep: cep,
+          cep
         },
       });
 
@@ -78,10 +107,10 @@ module.exports = {
       });
 
     } catch (error) {
-      
+
       console.log(error);
       res.status(500).send(error);
-    
+
     }
   },
 };

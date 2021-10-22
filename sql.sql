@@ -151,6 +151,8 @@ create table campaigns (
     data_fim date not null,
     hora_inicio time not null,
     hora_fim time not null,
+    created_at datetime,
+    updated_at datetime,
     constraint FK_institutions_campaings
     foreign key (institution_id)
     references institutions (id),
