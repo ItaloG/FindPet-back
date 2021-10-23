@@ -1,6 +1,6 @@
 const { Model, DataTypes } = require("sequelize");
 
-class TypeSpecialCondition extends Model {
+class SpecialCondition extends Model {
     static init(connection) {
         super.init(
             {
@@ -16,4 +16,4 @@ class TypeSpecialCondition extends Model {
     }
 }
 
-module.exports = TypeSpecialCondition;
+module.exports = SpecialCondition;
