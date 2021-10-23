@@ -161,7 +161,7 @@ create table campaigns (
     references ceps (id)
 );
 
-create table special_condition(
+create table special_conditions(
 	id int not null auto_increment primary key,
     condicao varchar(255) not null,
 	created_at datetime,
