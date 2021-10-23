@@ -31,6 +31,7 @@ module.exports = {
         }
 
         const token = jwt.sign({
+          institutionId: institution.id,
           perfil: "institution"
         },
           auth.secret, {

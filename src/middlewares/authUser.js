@@ -2,6 +2,8 @@ const jwt = require("jsonwebtoken");
 const { secret } = require("../config/auth");
 
 module.exports = async (req, res, next) => {
+
+    
     const authHeader = req.headers.authorization;
 
     if (!authHeader) return res.status(401).send({ error: "Token não informado" });
@@ -19,6 +21,7 @@ module.exports = async (req, res, next) => {
     try {
         const response = await jwt.verify(token, secret);
 
+        req.institutionId = response.institutionId;
         req.userPerfil = response.perfil;
     } catch (e) {
         console.error(e);

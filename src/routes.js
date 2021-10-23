@@ -1,7 +1,8 @@
 const routes = require("express").Router();
 
 const uploadSingleImage = require("./middlewares/uploadSingleImage");
-const authUser =  require("./middlewares/authUser");
+const uploadFirebase = require("./services/uploadFirebase");
+const authUser = require("./middlewares/authUser");
 const authInstitution = require("./middlewares/authInstitution");
 
 const institutionController = require("./controllers/institution");
@@ -12,6 +13,8 @@ const imageBannerInstitutionController = require("./controllers/institutionImage
 const descriptionInstitutionController = require("./controllers/institutionDescription");
 const supportController = require("./controllers/support");
 const typeInstitution = require("./controllers/typeInstitution");
+const campaignsController = require("./controllers/campaigns");
+const animalController = require("./controllers/animal");
 
 //rotas publicas
 routes.post("/login", loginContoller.store);
@@ -23,16 +26,19 @@ routes.get("/tipoInstituicoes", typeInstitution.index);
 routes.use(authUser);
 routes.get("/instituicoes", institutionController.index);
 
-
 routes.use(authInstitution);
-
 routes.get("/instituicoes", institutionController.index);
 routes.get("/instituicoes/:id", institutionController.find);
 routes.get("/apoios", supportController.index);
 routes.get("/apoios/:id", supportController.find);
-routes.post("/instituicoes/:id/perfil", uploadSingleImage, imagePerfilInstitutionController.store);
-routes.post("/instituicoes/:id/banner", uploadSingleImage, imageBannerInstitutionController.store);
-routes.post("/instituicoes/:id/descricao", descriptionInstitutionController.store);
+routes.get("/campanhas", campaignsController.index);
+routes.get("/campanhas/:id", campaignsController.find);
+
 routes.post("/apoios/:id", supportController.store);
+routes.post("/instituicoes/:id/perfil", uploadSingleImage, uploadFirebase, imagePerfilInstitutionController.store);
+routes.post("/instituicoes/:id/banner", uploadSingleImage, uploadFirebase, imageBannerInstitutionController.store);
+routes.post("/instituicoes/:id/descricao", descriptionInstitutionController.store);
+routes.post("/campanhas", uploadSingleImage, uploadFirebase, campaignsController.store);
+routes.post("/animais", uploadSingleImage ,uploadFirebase, animalController.store);
 
 module.exports = routes;
