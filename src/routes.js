@@ -13,7 +13,7 @@ const imageBannerInstitutionController = require("./controllers/institutionImage
 const descriptionInstitutionController = require("./controllers/institutionDescription");
 const supportController = require("./controllers/support");
 const typeInstitution = require("./controllers/typeInstitution");
-const campaignsController = require("./controllers/campaigns");
+const campaignController = require("./controllers/campaign");
 const animalController = require("./controllers/animal");
 
 //rotas publicas
@@ -31,14 +31,14 @@ routes.get("/instituicoes", institutionController.index);
 routes.get("/instituicoes/:id", institutionController.find);
 routes.get("/apoios", supportController.index);
 routes.get("/apoios/:id", supportController.find);
-routes.get("/campanhas", campaignsController.index);
-routes.get("/campanhas/:id", campaignsController.find);
+routes.get("/campanhas", campaignController.index);
+routes.get("/campanhas/:id", campaignController.find);
 
 routes.post("/apoios/:id", supportController.store);
 routes.post("/instituicoes/:id/perfil", uploadSingleImage, uploadFirebase, imagePerfilInstitutionController.store);
 routes.post("/instituicoes/:id/banner", uploadSingleImage, uploadFirebase, imageBannerInstitutionController.store);
 routes.post("/instituicoes/:id/descricao", descriptionInstitutionController.store);
-routes.post("/campanhas", uploadSingleImage, uploadFirebase, campaignsController.store);
+routes.post("/campanhas", uploadSingleImage, uploadFirebase, campaignController.store);
 routes.post("/animais", uploadSingleImage ,uploadFirebase, animalController.store);
 
 module.exports = routes;

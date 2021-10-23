@@ -19,12 +19,12 @@ class Institution extends Model {
     );
   }
   static associate(models) {
+    this.belongsTo(models.TypeInstitution);
     this.hasMany(models.TelephoneInstitution);
     this.hasMany(models.AddressInstitution);
     this.hasMany(models.Support);
-    this.belongsTo(models.TypeInstitution);
     this.hasMany(models.Campaigns);
-    this.belongsToMany(models.Animal, { through: "institution_animals" });
+    this.hasMany(models.Animal)
   }
 }
 

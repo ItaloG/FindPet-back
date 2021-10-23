@@ -12,6 +12,15 @@ INSERT INTO `type_supports` (`tipo`, `created_at`, `updated_at`) VALUES ('REMÉD
 INSERT INTO `type_supports` (`tipo`, `created_at`, `updated_at`) VALUES ('COSMÉTICOS', current_timestamp(), current_timestamp());
 INSERT INTO `type_supports` (`tipo`, `created_at`, `updated_at`) VALUES ('VOLUNTÁRIO', current_timestamp(), current_timestamp());
 
+#Cadastro de tipos de animais
+INSERT INTO `type_animals` (`tipo`, `created_at`, `updated_at`) VALUES ('CACHORRO', current_timestamp(), current_timestamp());
+INSERT INTO `type_animals` (`tipo`, `created_at`, `updated_at`) VALUES ('GATO', current_timestamp(), current_timestamp());
+
+#Cadastro de tipos de condições especiais
+INSERT INTO `special_conditions` (`condicao`, `created_at`, `updated_at`) VALUES ('VISÃO PARCIAL', current_timestamp(), current_timestamp());
+INSERT INTO `special_conditions` (`condicao`, `created_at`, `updated_at`) VALUES ('CEGO', current_timestamp(), current_timestamp());
+INSERT INTO `special_conditions` (`condicao`, `created_at`, `updated_at`) VALUES ('ALERGICO', current_timestamp(), current_timestamp());
+INSERT INTO `special_conditions` (`condicao`, `created_at`, `updated_at`) VALUES ('DEFICIÊNCIA FÍSICA', current_timestamp(), current_timestamp());
 
 use findpet_db;
 
@@ -136,7 +145,6 @@ create table type_supports (
     updated_at datetime
 );
 
-
 create table campaigns (
 	id int not null auto_increment primary key,
     institution_id int not null,
@@ -175,20 +183,6 @@ create table type_animals(
     updated_at datetime
 );
 
-create table institution_animals(
-	id int not null auto_increment primary key,
-    institution_id int not null,
-    animal_id int not null,
-    created_at datetime,
-    updated_at datetime,
-    constraint FK_institutions_institution_animals
-    foreign key (institution_id)
-    references institutions (id),
-    constraint FK_animals_institution_animals
-    foreign key (animal_id)
-    references animals (id)
-);
-
 create table animal_special_conditions(
 	id int not null auto_increment primary key,
     animal_id int not null,
@@ -200,12 +194,13 @@ create table animal_special_conditions(
     references animals (id),
     constraint FK_special_condition_animal_special_conditions
     foreign key (special_condition_id)
-    references special_condition (id)
+    references special_conditions (id)
 );
 
 create table animals(
 	id int not null auto_increment primary key,
     type_animal_id int not null,
+    institution_id int not null,
     url_foto_perfil text not null,
     nome varchar(255) not null,
     personalidade varchar(255),
@@ -214,5 +209,8 @@ create table animals(
     historia varchar(255) not null,
     constraint FK_type_animals_animals
     foreign key (type_animal_id)
-    references type_animals (id)
+    references type_animals (id),
+    constraint FK_institutions_animals
+    foreign key (institution_id)
+    references institutions (id)
 );

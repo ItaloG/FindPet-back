@@ -11,6 +11,7 @@ class Animal extends Model {
                 castrado: DataTypes.BOOLEAN,
                 historia: DataTypes.STRING,
                 type_animal_id: DataTypes.INTEGER,
+                institution_id: DataTypes.INTEGER,
             },
             {
                 sequelize: connection,
@@ -19,8 +20,8 @@ class Animal extends Model {
     }
     static associate(models) {
         this.belongsTo(models.TypeAnimal);
-        this.belongsToMany(models.TypeSpecialCondition, { through: "animal_special_conditions" });
-        this.belongsToMany(models.Institution, { through: "institution_animals" });
+        this.belongsToMany(models.SpecialCondition, { through: "animal_special_conditions" });
+        this.belongsTo(models.Institution);
     }
 }
 

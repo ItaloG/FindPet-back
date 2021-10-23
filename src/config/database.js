@@ -1,5 +1,5 @@
 module.exports = {
-    url: process.env.DATABASE_URL,
+    url: "mysql://root:bcd127@localhost:3306/findpet_db",
     config: {
         dialect: "mysql",
         define: {
