@@ -1,8 +1,60 @@
 const Animal = require("../models/Animal");
 const Institution = require("../models/institution");
-
+const { find } = require("./institution");
 
 module.exports = {
+    async index(req, res) {
+
+        try {
+            let animais = await Animal.findAll({
+                attributes: ["id", "url_foto_perfil", "nome", "personalidade", "idade", "castrado", "historia"],
+                include: [
+                    {
+                        association: "TypeAnimal",
+                        attributes: ["tipo"],
+                    },
+                    {
+                        association: "Institution",
+                        attributes: ["id", "nome"],
+                    }
+                ],
+                order: [["created_at", "DESC"]]
+            });
+
+            res.status(201).send(animais);
+        } catch (error) {
+            console.log(error);
+            return res.status(500).send(error)
+        }
+
+
+    },
+    async find(req, res) {
+        const { id } = req.params;
+
+        try {
+
+            let animais = await Animal.findByPk(id, {
+                attributes: ["id", "url_foto_perfil", "nome", "personalidade", "idade", "castrado", "historia"],
+                include: [
+                    {
+                        association: "TypeAnimal",
+                        attributes: ["tipo"],
+                    },
+                    {
+                        association: "Institution",
+                        attributes: ["id", "nome"],
+                    }
+                ],
+            });
+
+            res.status(201).send(animais);
+            
+        } catch (error) {
+            console.log(error);
+            return res.status(500).send(error)
+        }
+    },
     async store(req, res) {
         let { nome, personalidade, idade, castrado, historia, tipoAnimal, condicaoEspecial } = req.body;
 

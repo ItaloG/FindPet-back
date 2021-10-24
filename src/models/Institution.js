@@ -25,6 +25,7 @@ class Institution extends Model {
     this.belongsTo(models.TypeInstitution);
     this.hasMany(models.Campaigns);
     this.hasMany(models.Animal);
+    this.hasMany(models.Employee);
   }
 }
 
