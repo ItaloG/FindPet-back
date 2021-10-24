@@ -7,7 +7,7 @@ class Employee extends Model {
                 cpf: DataTypes.STRING,
                 url_foto_perfil: DataTypes.TEXT,
                 nome: DataTypes.STRING,
-                dia_entreda: DataTypes.DATE,
+                dia_entrada: DataTypes.DATE,
                 institution_id: DataTypes.INTEGER,
                 cargo_id: DataTypes.INTEGER,
             },
