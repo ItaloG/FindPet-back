@@ -40,5 +40,6 @@ routes.post("/instituicoes/:id/banner", uploadSingleImage, uploadFirebase, image
 routes.post("/instituicoes/:id/descricao", descriptionInstitutionController.store);
 routes.post("/campanhas", uploadSingleImage, uploadFirebase, campaignsController.store);
 routes.post("/animais", uploadSingleImage ,uploadFirebase, animalController.store);
+// routes.post("/funcionarios", uploadSingleImage, uploadFirebase, employeesController.store)
 
 module.exports = routes;
