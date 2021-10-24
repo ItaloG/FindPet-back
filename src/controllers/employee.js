@@ -1,8 +1,85 @@
 const Employee = require("../models/Employee");
 const Institution = require("../models/institution");
-
+const sequelize = require("sequelize");
 
 module.exports = {
+    async index(req, res) {
+
+        try {
+            let funcionarios = await Employee.findAll({
+                attributes: [
+                    "id",
+                    "url_foto_perfil",
+                    "nome",
+                    [
+                        sequelize.fn('timestampdiff', sequelize.literal('year'), sequelize.col('dia_entrada'), sequelize.fn('curdate')), "anos"
+                    ],
+                    [
+                        sequelize.fn('timestampdiff', sequelize.literal('month'), sequelize.col('dia_entrada'), sequelize.fn('curdate')), "meses"
+                    ],
+                    [
+                        sequelize.fn('timestampdiff', sequelize.literal('day'), sequelize.col('dia_entrada'), sequelize.fn('curdate')), "dias"
+                    ]
+                ],
+                include: [
+                    {
+                        association: "Position",
+                        attributes: ["cargo"]
+                    },
+                    {
+                        association: "Institution",
+                        attributes: ["id", "nome"]
+                    }
+                ],
+                order: [["created_at", "DESC"]]
+            });
+
+            res.status(201).send(funcionarios);
+        } catch (error) {
+            console.log(error);
+            res.status(500).send(error);
+        }
+
+    },
+    async find(req, res) {
+        const { id } = req.params;
+
+        try {
+            let funcionario = await Employee.findByPk(id, {
+                attributes: [
+                    "id",
+                    "url_foto_perfil",
+                    "nome",
+                    [
+                        sequelize.fn('timestampdiff', sequelize.literal('year'), sequelize.col('dia_entrada'), sequelize.fn('curdate')), "anos"
+                    ],
+                    [
+                        sequelize.fn('timestampdiff', sequelize.literal('month'), sequelize.col('dia_entrada'), sequelize.fn('curdate')), "meses"
+                    ],
+                    [
+                        sequelize.fn('timestampdiff', sequelize.literal('day'), sequelize.col('dia_entrada'), sequelize.fn('curdate')), "dias"
+                    ]
+                ],
+                include: [
+                    {
+                        association: "Position",
+                        attributes: ["cargo"]
+                    },
+                    {
+                        association: "Institution",
+                        attributes: ["id", "nome"]
+                    }
+                ],
+                order: [["created_at", "DESC"]]
+            });
+
+            res.status(201).send(funcionario);
+        } catch (error) {
+            console.log(error);
+            return res.status(500).send(error)
+        }
+
+    },
     async store(req, res) {
         const { cpf, nome, cargo, diaEntrada } = req.body;
 
@@ -26,7 +103,7 @@ module.exports = {
                 url_foto_perfil: firebaseUrl,
                 nome,
                 dia_entrada: diaEntrada,
-                cargo_id: cargo,
+                position_id: cargo,
                 institution_id: institutionId,
             });
 

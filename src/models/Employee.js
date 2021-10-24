@@ -9,7 +9,7 @@ class Employee extends Model {
                 nome: DataTypes.STRING,
                 dia_entrada: DataTypes.DATE,
                 institution_id: DataTypes.INTEGER,
-                cargo_id: DataTypes.INTEGER,
+                position_id: DataTypes.INTEGER,
             },
             {
                 sequelize: connection

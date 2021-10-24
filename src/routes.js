@@ -36,6 +36,8 @@ routes.get("/campanhas", campaignsController.index);
 routes.get("/campanhas/:id", campaignsController.find);
 routes.get("/animais", animalController.index);
 routes.get("/animais/:id", animalController.find);
+routes.get("/funcionarios", employeeController.index);
+routes.get("/funcionarios/:id", employeeController.find);
 
 routes.post("/apoios/:id", supportController.store);
 routes.post("/instituicoes/:id/perfil", uploadSingleImage, uploadFirebase, imagePerfilInstitutionController.store);
