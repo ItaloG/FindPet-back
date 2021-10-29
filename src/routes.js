@@ -16,6 +16,7 @@ const typeInstitution = require("./controllers/typeInstitution");
 const campaignsController = require("./controllers/campaigns");
 const animalController = require("./controllers/animal");
 const employeeController = require("./controllers/employee");
+const servicesController = require("./controllers/service");
 
 //rotas publicas
 routes.post("/login", loginContoller.store);
@@ -46,5 +47,6 @@ routes.post("/instituicoes/:id/descricao", descriptionInstitutionController.stor
 routes.post("/campanhas", uploadSingleImage, uploadFirebase, campaignsController.store);
 routes.post("/animais", uploadSingleImage ,uploadFirebase, animalController.store);
 routes.post("/funcionarios", uploadSingleImage, uploadFirebase, employeeController.store)
+routes.post("/servicos", servicesController.store);
 
 module.exports = routes;

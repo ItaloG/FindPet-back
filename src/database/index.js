@@ -16,6 +16,7 @@ const User = require("../models/User");
 const TelephoneUser = require("../models/TelephoneUser");
 const Employee = require("../models/Employee");
 const Position = require("../models/Position");
+const Service = require("../models/Services");
 
 const connection = new Sequelize(dbConfig.url, dbConfig.config);
 
@@ -34,6 +35,7 @@ TypeAnimal.init(connection);
 SpecialCondition.init(connection);
 Employee.init(connection);
 Position.init(connection);
+Service.init(connection);
 
 Institution.associate(connection.models);
 TelephoneInstitution.associate(connection.models);
@@ -50,7 +52,7 @@ TypeAnimal.associate(connection.models);
 SpecialCondition.associate(connection.models);
 Employee.associate(connection.models);
 Position.associate(connection.models);
-
+Service.associate(connection.models);
 
 // for (let assoc of Object.kyes(Institution.associations)){
 //     for (let accessor of Object.keys(Institution.associations[assoc].accessors)) {
