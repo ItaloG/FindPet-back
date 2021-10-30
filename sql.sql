@@ -267,7 +267,7 @@ create table services(
     updated_at datetime
 );
 
-create table instituion_sevice(
+create table institution_services(
 	id int not null auto_increment primary key,
     institution_id int not null,
     service_id int not null,

@@ -16,7 +16,8 @@ const User = require("../models/User");
 const TelephoneUser = require("../models/TelephoneUser");
 const Employee = require("../models/Employee");
 const Position = require("../models/Position");
-const Service = require("../models/Services");
+const Service = require("../models/Service");
+const InstitutionService = require("../models/InstitutionService");
 
 const connection = new Sequelize(dbConfig.url, dbConfig.config);
 
@@ -36,6 +37,7 @@ SpecialCondition.init(connection);
 Employee.init(connection);
 Position.init(connection);
 Service.init(connection);
+InstitutionService.init(connection);
 
 Institution.associate(connection.models);
 TelephoneInstitution.associate(connection.models);
@@ -54,8 +56,9 @@ Employee.associate(connection.models);
 Position.associate(connection.models);
 Service.associate(connection.models);
 
-// for (let assoc of Object.kyes(Institution.associations)){
-//     for (let accessor of Object.keys(Institution.associations[assoc].accessors)) {
-//         console.log(Institution.name + '.' + Institution.associations[assoc].accessors[accessor] + '()');
+
+// for (let assoc of Object.keys(Service.associations)){
+//     for (let accessor of Object.keys(Service.associations[assoc].accessors)) {
+//         console.log(Service.name + '.' + Service.associations[assoc].accessors[accessor] + '()');
 //     }
 // }

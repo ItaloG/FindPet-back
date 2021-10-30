@@ -1,16 +1,14 @@
-const Intituion = require("../models/Institution");
+const Service = require("../models/Service");
 
 module.exports = {
-
-    async store(req, res) {
-        const { institutionId } = req;
-
+    async index(req, res) {
         try {
-            
-        } catch (error) {
-            
-        }
-        
-    }
+            const servicos = await Service.findAll();
 
+            res.status(201).send(servicos);
+        } catch (error) {
+            console.log(error);
+            return res.status(500).send(error);
+        }
+    }
 }
