@@ -12,7 +12,7 @@ class Service extends Model {
         );
     }
     static associate(models) {
-        this.belongsToMany(models.Institution, { through: "instituion_sevice" });
+        this.belongsToMany(models.Institution, { through: "institution_services" });
     }
 }
 

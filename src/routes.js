@@ -43,12 +43,13 @@ routes.get("/funcionarios/:id", employeeController.find);
 routes.get("/servicos", servicesController.index);
 
 routes.post("/apoios/:id", supportController.store);
-routes.post("/instituicoes/:id/perfil", uploadSingleImage, uploadFirebase, imagePerfilInstitutionController.store);
-routes.post("/instituicoes/:id/banner", uploadSingleImage, uploadFirebase, imageBannerInstitutionController.store);
 routes.post("/instituicoes/:id/descricao", descriptionInstitutionController.store);
 routes.post("/campanhas", uploadSingleImage, uploadFirebase, campaignsController.store);
 routes.post("/animais", uploadSingleImage ,uploadFirebase, animalController.store);
 routes.post("/funcionarios", uploadSingleImage, uploadFirebase, employeeController.store)
 routes.post("/servicos", institutionServicesController.store);
+
+routes.put("/instituicoes/:id/banner", uploadSingleImage, uploadFirebase, imageBannerInstitutionController.update);
+routes.put("/instituicoes/:id/perfil", uploadSingleImage, uploadFirebase, imagePerfilInstitutionController.update);
 
 module.exports = routes;

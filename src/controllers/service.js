@@ -3,7 +3,9 @@ const Service = require("../models/Service");
 module.exports = {
     async index(req, res) {
         try {
-            const servicos = await Service.findAll();
+            const servicos = await Service.findAll({
+                attributes: ["id", "servico"]
+            });
 
             res.status(201).send(servicos);
         } catch (error) {

@@ -26,7 +26,7 @@ class Institution extends Model {
     this.hasMany(models.Campaigns);
     this.hasMany(models.Animal);
     this.hasMany(models.Employee);
-    this.belongsToMany(models.Service, { through: "instituion_sevice" });
+    this.belongsToMany(models.Service, { through: "institution_services" });
   }
 }
 

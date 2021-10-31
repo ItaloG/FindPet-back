@@ -1,7 +1,7 @@
 const Institution = require("../models/institution");
 
 module.exports = {
-    async store(req, res) {
+    async update(req, res) {
 
         const { firebaseUrl } = req.file
 

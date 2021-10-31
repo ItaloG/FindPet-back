@@ -12,6 +12,7 @@ class InstitutionService extends Model {
             }
         );
     }
+
 }
 
 module.exports = InstitutionService;

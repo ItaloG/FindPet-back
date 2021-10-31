@@ -35,18 +35,24 @@ module.exports = {
 
     try {
       const institution = await Institution.findByPk(id, {
-        attributes: ["id", "nome"],
+        attributes: ["id", "nome", "email", "url_foto_banner", "url_foto_perfil"],
         include: [
+          {
+            association: "TelephoneInstitutions",
+            attributes: ["numero"],
+          },
           {
             association: "TypeInstitution",
             attributes: ["type_institution"],
           },
+          {
+            association: "Services",
+            attributes: ["id","servico"],
+          }
         ]
       });
 
-      res.status(200).send({
-        institution,
-      });
+      res.status(200).send(institution);
     } catch (error) {
       console.log(error);
       res.status(500).send(error);
@@ -159,7 +165,8 @@ module.exports = {
       });
 
       const token = jwt.sign({
-        institutionId: institution.id
+        institutionId: institution.id,
+        perfil: "institution"
       },
         auth.secret, {
         expiresIn: "24h"
