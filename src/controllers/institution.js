@@ -183,17 +183,18 @@ module.exports = {
       });
 
       res.status(201).send({
+        id: institution.id,
         nome: institution.nome,
         email: institution.email,
         senha: institution.senha,
         cnpj: institution.cnpj,
-        tipoEstab: tipoEstabelecimento,
-        tell: telephone,
-        cell: cellphone.numero,
-        rua: address.logradouro,
-        num: address.numero,
-        comp: address.complemento,
-        seuCep: newCep.cep,
+        tipoEstabelecimento: tipoEstabelecimento,
+        telefone: telephone,
+        celular: cellphone,
+        logradouro: address.logradouro,
+        numero: address.numero,
+        complemento: address.complemento,
+        cep: newCep.cep,
         token,
       });
 
