@@ -18,6 +18,7 @@ const animalController = require("./controllers/animal");
 const employeeController = require("./controllers/employee");
 const servicesController = require("./controllers/service");
 const institutionServicesController = require("./controllers/institutionService");
+const positionController = require("./controllers/position");
 
 //rotas publicas
 routes.post("/login", loginContoller.store);
@@ -41,6 +42,7 @@ routes.get("/animais/:id", animalController.find);
 routes.get("/funcionarios", employeeController.index);
 routes.get("/funcionarios/:id", employeeController.find);
 routes.get("/servicos", servicesController.index);
+routes.get("/cargos", positionController.index);
 
 routes.post("/apoios/:id", supportController.store);
 routes.post("/instituicoes/:id/descricao", descriptionInstitutionController.store);

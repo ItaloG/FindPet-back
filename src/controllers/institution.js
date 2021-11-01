@@ -48,6 +48,16 @@ module.exports = {
           {
             association: "Services",
             attributes: ["id","servico"],
+          },
+          {
+            association: "AddressInstitutions",
+            attributes: ["logradouro", "numero", "complemento"],
+            include:[
+              {
+                association: "Cep",
+                attributes: ["cep"]
+              }
+            ]
           }
         ]
       });

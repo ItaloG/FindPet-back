@@ -5,6 +5,8 @@ const sequelize = require("sequelize");
 module.exports = {
     async index(req, res) {
 
+        const { institutionId } = req;
+
         try {
             let funcionarios = await Employee.findAll({
                 attributes: [
@@ -26,12 +28,9 @@ module.exports = {
                         association: "Position",
                         attributes: ["cargo"]
                     },
-                    {
-                        association: "Institution",
-                        attributes: ["id", "nome"]
-                    }
+
                 ],
-                order: [["created_at", "DESC"]]
+                where: {institution_id: institutionId}
             });
 
             res.status(201).send(funcionarios);
@@ -65,12 +64,7 @@ module.exports = {
                         association: "Position",
                         attributes: ["cargo"]
                     },
-                    {
-                        association: "Institution",
-                        attributes: ["id", "nome"]
-                    }
                 ],
-                order: [["created_at", "DESC"]]
             });
 
             res.status(201).send(funcionario);
