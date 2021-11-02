@@ -53,5 +53,8 @@ routes.post("/servicos", institutionServicesController.store);
 
 routes.put("/instituicoes/:id/banner", uploadSingleImage, uploadFirebase, imageBannerInstitutionController.update);
 routes.put("/instituicoes/:id/perfil", uploadSingleImage, uploadFirebase, imagePerfilInstitutionController.update);
+routes.put("/funcionarios/:id", uploadSingleImage, uploadFirebase, employeeController.update);
+
+routes.delete("/funcionarios/:id", employeeController.delete)
 
 module.exports = routes;

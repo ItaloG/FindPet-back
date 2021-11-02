@@ -2,6 +2,7 @@ const InstitutionService = require("../models/InstitutionService");
 
 module.exports = {
     async store(req, res) {
+        
         const { servicos } = req.body;
         const { institutionId } = req;
 

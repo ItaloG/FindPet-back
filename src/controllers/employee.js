@@ -6,7 +6,7 @@ module.exports = {
     async index(req, res) {
 
         const { institutionId } = req;
-
+        console.log("CAAARAAALHOOOO");
         try {
             let funcionarios = await Employee.findAll({
                 attributes: [
@@ -30,7 +30,7 @@ module.exports = {
                     },
 
                 ],
-                where: {institution_id: institutionId}
+                where: { institution_id: institutionId }
             });
 
             res.status(201).send(funcionarios);
@@ -47,7 +47,9 @@ module.exports = {
             let funcionario = await Employee.findByPk(id, {
                 attributes: [
                     "id",
+                    "cpf",
                     "url_foto_perfil",
+                    "dia_entrada",
                     "nome",
                     [
                         sequelize.fn('timestampdiff', sequelize.literal('year'), sequelize.col('dia_entrada'), sequelize.fn('curdate')), "anos"
@@ -62,7 +64,7 @@ module.exports = {
                 include: [
                     {
                         association: "Position",
-                        attributes: ["cargo"]
+                        attributes: ["id", "cargo"]
                     },
                 ],
             });
@@ -107,5 +109,60 @@ module.exports = {
             res.status(500).send(error)
         }
 
+    },
+    async update(req, res) {
+        const { cpf, nome, cargo, diaEntrada } = req.body;
+
+        let firebaseUrl = ""
+        console.log(req.file);
+        if (req.file){
+            firebaseUrl = req.file.firebaseUrl;
+        }
+
+
+        const { id } = req.params;
+
+        if (!cpf || !nome || !cargo || !diaEntrada) {
+            return res.status(400).send({ error: "Faltam alguns dados" });
+        }
+
+        try {
+            let funcionario = await Employee.findByPk(id);
+
+            if (!funcionario) {
+                return res.status(404).send({ error: "Funcionario não encontrada" });
+            }
+
+            funcionario.cpf = cpf;
+            funcionario.nome = nome;
+            funcionario.position_id = cargo;
+            funcionario.dia_entrada = diaEntrada;
+            funcionario.url_foto_perfil = firebaseUrl;
+
+            funcionario.save();
+
+            res.status(201).send(funcionario);
+        } catch (error) {
+            console.log(error);
+            res.status(500).send(error)
+        }
+    },
+    async delete(req, res) {
+        const { id } = req.params;
+
+        try {
+            let funcionario = await Employee.findByPk(id);
+
+            if (!funcionario) {
+                return res.status(404).send({ error: "Funcionario não encontrada" });
+            }
+
+            await funcionario.destroy();
+
+            res.status(201).send({menssagem: "funcionario excluido com sucesso"});
+        } catch (error) {
+            console.log(error);
+            res.status(500).send(error)
+        }
     }
 }
