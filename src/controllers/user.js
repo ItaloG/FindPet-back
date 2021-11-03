@@ -105,15 +105,17 @@ module.exports = {
             });
 
             res.status(201).send({
+                id: user.id,
                 nome: user.nome,
                 email: user.email,
                 senha: user.senha,
-                tell: telephone,
-                cell: cellphone,
-                rua: user.logradouro,
-                num: user.numero,
-                comp: user.complemento,
-                seuCep: newCep.cep,
+                cpf: user.cpf,
+                telefone: telephone,
+                celelular: cellphone,
+                logradouro: user.logradouro,
+                numero: user.numero,
+                complemento: user.complemento,
+                cep: newCep.cep,
                 token,
             });
 
