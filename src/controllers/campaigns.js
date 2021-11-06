@@ -6,12 +6,34 @@ module.exports = {
 
   async index(req, res) {
 
+    const { institutionId } = req;
+
     try {
       const campaigns = await Campaigns.findAll({
+        attributes: [
+          "id",
+          "logradouro",
+          "complemento",
+          "url_foto",
+          "cidade",
+          "titulo",
+          "descricao",
+          "data_inicio",
+          "data_fim",
+          "hora_inicio",
+          "hora_fim"
+        ],
+        include: [
+          {
+            association: "Cep",
+            attributes: ["cep"]
+          }
+        ],
+        where: { institution_id: institutionId },
         order: [["created_at", "DESC"]]
       });
 
-      res.status(200).send([campaigns]);
+      res.status(200).send(campaigns);
 
     } catch (error) {
       console.log(error);
@@ -38,6 +60,7 @@ module.exports = {
       titulo,
       cep,
       numero,
+      cidade,
       logradouro,
       complemento,
       descricao,
@@ -59,6 +82,7 @@ module.exports = {
       !hora_inicio ||
       !hora_fim ||
       !cep ||
+      !cidade ||
       !logradouro ||
       !numero
     ) {
@@ -93,6 +117,7 @@ module.exports = {
         complemento,
         url_foto: firebaseUrl,
         titulo,
+        cidade,
         descricao,
         data_inicio,
         data_fim,

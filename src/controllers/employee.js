@@ -6,7 +6,6 @@ module.exports = {
     async index(req, res) {
 
         const { institutionId } = req;
-        console.log("CAAARAAALHOOOO");
         try {
             let funcionarios = await Employee.findAll({
                 attributes: [

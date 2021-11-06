@@ -168,6 +168,7 @@ create table campaigns (
     institution_id int not null,
     cep_id int not null,
     numero int not null,
+    ciadde varchar(255) not null,
     logradouro varchar(255) not null,
     complemento varchar(255) not null,
 	url_foto varchar(255) not null,
