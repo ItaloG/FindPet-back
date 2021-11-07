@@ -113,8 +113,7 @@ module.exports = {
         const { cpf, nome, cargo, diaEntrada } = req.body;
 
         let firebaseUrl = ""
-        console.log(req.file);
-        if (req.file){
+        if (req.file) {
             firebaseUrl = req.file.firebaseUrl;
         }
 
@@ -136,14 +135,16 @@ module.exports = {
             funcionario.nome = nome;
             funcionario.position_id = cargo;
             funcionario.dia_entrada = diaEntrada;
-            funcionario.url_foto_perfil = firebaseUrl;
+            if (firebaseUrl) {
+                funcionario.url_foto_perfil = firebaseUrl;
+            }
 
             funcionario.save();
 
             res.status(201).send(funcionario);
         } catch (error) {
             console.log(error);
-            res.status(500).send(error)
+            res.status(500).send(error);
         }
     },
     async delete(req, res) {
@@ -158,10 +159,10 @@ module.exports = {
 
             await funcionario.destroy();
 
-            res.status(201).send({menssagem: "funcionario excluido com sucesso"});
+            res.status(201).send({ menssagem: "funcionario excluido com sucesso" });
         } catch (error) {
             console.log(error);
-            res.status(500).send(error)
+            res.status(500).send(error);
         }
     }
 }

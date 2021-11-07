@@ -138,4 +138,90 @@ module.exports = {
 
     }
   },
+  async update(req, res) {
+    const {
+      titulo,
+      cep,
+      numero,
+      cidade,
+      logradouro,
+      complemento,
+      descricao,
+      data_inicio,
+      data_fim,
+      hora_inicio,
+      hora_fim,
+    } = req.body;
+
+    let firebaseUrl = ""
+    if (req.file) {
+      firebaseUrl = req.file.firebaseUrl;
+    }
+
+    const { id } = req.params;
+
+    if (
+      !titulo ||
+      !descricao ||
+      !data_inicio ||
+      !data_fim ||
+      !hora_inicio ||
+      !hora_fim ||
+      !cep ||
+      !cidade ||
+      !logradouro ||
+      !numero
+    ) {
+      return res.status(400).send({ error: "Faltam alguns dados." });
+    }
+
+    try {
+      let campanha = await Campaigns.findByPk(id);
+
+      if (!campanha) {
+        return res.status(404).send({ error: "Funcionario não encontra" });
+      }
+
+      campanha.titulo = titulo;
+      campanha.descricao = descricao;
+      campanha.data_inicio = data_inicio
+      campanha.data_fim = data_fim;
+      campanha.hora_inicio = hora_inicio;
+      campanha.hora_fim = hora_fim;
+      campanha.cep = cep;
+      campanha.cidade = cidade;
+      campanha.logradouro = logradouro;
+      campanha.numero = numero;
+      if (firebaseUrl) {
+        campanha.url_foto = firebaseUrl;
+      }
+
+      campanha.save();
+
+      res.status(201).send(campanha);
+    } catch (error) {
+      console.log(error);
+      res.status(500).send(error);
+    }
+
+  },
+  async delete(req, res) {
+    const { id } = req.params;
+
+    try {
+      let campanha = await Campaigns.findByPk(id);
+
+      if (!campanha) {
+        return res.status(404).send({ error: "Funcoinario não encontrado" });
+      }
+
+      await campanha.destroy();
+
+      res.status(201).send({ mensagem: "funcionario excluido co msucesso" });
+
+    } catch (error) {
+      console.log(error);
+      res.status(500).send(error);
+    }
+  }
 };

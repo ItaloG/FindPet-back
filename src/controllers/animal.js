@@ -1,10 +1,9 @@
 const Animal = require("../models/Animal");
 const Institution = require("../models/institution");
-const { find } = require("./institution");
 
 module.exports = {
     async index(req, res) {
-
+        const { institutionId } = req;
         try {
             let animais = await Animal.findAll({
                 attributes: ["id", "url_foto_perfil", "nome", "personalidade", "idade", "castrado", "historia"],
@@ -13,11 +12,8 @@ module.exports = {
                         association: "TypeAnimal",
                         attributes: ["tipo"],
                     },
-                    {
-                        association: "Institution",
-                        attributes: ["id", "nome"],
-                    }
                 ],
+                where: { institution_id: institutionId },
                 order: [["created_at", "DESC"]]
             });
 
@@ -49,7 +45,7 @@ module.exports = {
             });
 
             res.status(201).send(animais);
-            
+
         } catch (error) {
             console.log(error);
             return res.status(500).send(error)
