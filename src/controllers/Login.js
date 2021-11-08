@@ -27,16 +27,21 @@ module.exports = {
         });
 
         if (!institution || !bcrypt.compareSync(senha, institution.senha)) {
-          return res.status(403).send({ error: "Usuário e/ou senha inválidos" });
+          return res
+            .status(403)
+            .send({ error: "Usuário e/ou senha inválidos" });
         }
 
-        const token = jwt.sign({
-          institutionId: institution.id,
-          perfil: "institution"
-        },
-          auth.secret, {
-          expiresIn: "24h"
-        });
+        const token = jwt.sign(
+          {
+            institutionId: institution.id,
+            perfil: "institution",
+          },
+          auth.secret,
+          {
+            expiresIn: "24h",
+          }
+        );
 
         return setTimeout(() => {
           return res.status(201).send({
@@ -44,33 +49,39 @@ module.exports = {
               email,
               senha,
             },
-            token
+            token,
           });
         }, 3000);
       }
-
 
       if (!user || !bcrypt.compareSync(senha, user.senha)) {
         return res.status(403).send({ error: "Usuário e/ou senha inválidos" });
       }
 
-      const token = jwt.sign({
-        perfil: "user"
-      },
-        auth.secret, {
-        expiresIn: "24h"
+      const token = jwt.sign(
+        {
+          perfil: "user",
+        },
+        auth.secret,
+        {
+          expiresIn: "24h",
+        }
+      );
+
+      console.log(user.getDataValue("id"));
+
+      return res.status(201).send({
+        id: user.getDataValue("id"),
+        nome: user.getDataValue("nome"),
+        email: user.getDataValue("email"),
+        senha: user.getDataValue("senha"),
+        url_foto_perfil: user.getDataValue("urlFotoPerfil"),
+        cpf: user.getDataValue("cpf"),
+        logradouro: user.getDataValue("logradouro"),
+        numero: user.getDataValue("numero"),
+        complemento: user.getDataValue("complemento"),
+        token,
       });
-
-      setTimeout(() => {
-        return res.status(201).send({
-          usuario: {
-            email,
-            senha,
-          },
-          token
-        });
-      }, 3000);
-
     } catch (error) {
       console.log(error);
       return res.status(500).send(error);
