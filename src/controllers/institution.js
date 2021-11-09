@@ -6,7 +6,6 @@ const auth = require("../config/auth");
 
 module.exports = {
   async index(req, res) {
-
     try {
       const institutions = await Institution.findAll({
         attributes: ["id", "nome", "url_foto_perfil", "url_foto_banner"],
@@ -22,12 +21,10 @@ module.exports = {
       res.status(200).send({
         institutions,
       });
-
     } catch (error) {
       console.log(error);
       res.status(500).send({ error });
     }
-
   },
 
   async find(req, res) {
@@ -35,7 +32,13 @@ module.exports = {
 
     try {
       const institution = await Institution.findByPk(id, {
-        attributes: ["id", "nome", "email", "url_foto_banner", "url_foto_perfil"],
+        attributes: [
+          "id",
+          "nome",
+          "email",
+          "url_foto_banner",
+          "url_foto_perfil",
+        ],
         include: [
           {
             association: "TelephoneInstitutions",
@@ -47,19 +50,19 @@ module.exports = {
           },
           {
             association: "Services",
-            attributes: ["id","servico"],
+            attributes: ["id", "servico"],
           },
           {
             association: "AddressInstitutions",
             attributes: ["logradouro", "numero", "complemento"],
-            include:[
+            include: [
               {
                 association: "Cep",
-                attributes: ["cep"]
-              }
-            ]
-          }
-        ]
+                attributes: ["cep"],
+              },
+            ],
+          },
+        ],
       });
 
       res.status(200).send(institution);
@@ -146,7 +149,6 @@ module.exports = {
           .send({ error: "Você deve informar um telefone ou celular." });
       }
 
-
       let telephone = "";
 
       if (telefone) {
@@ -174,13 +176,16 @@ module.exports = {
         cep_id: newCep.id,
       });
 
-      const token = jwt.sign({
-        institutionId: institution.id,
-        perfil: "institution"
-      },
-        auth.secret, {
-        expiresIn: "24h"
-      });
+      const token = jwt.sign(
+        {
+          institutionId: institution.id,
+          perfil: "institution",
+        },
+        auth.secret,
+        {
+          expiresIn: "24h",
+        }
+      );
 
       res.status(201).send({
         id: institution.id,
@@ -197,7 +202,6 @@ module.exports = {
         cep: newCep.cep,
         token,
       });
-
     } catch (error) {
       console.log(error);
       res.status(500).send(error);

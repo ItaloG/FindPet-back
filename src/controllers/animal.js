@@ -1,95 +1,164 @@
 const Animal = require("../models/Animal");
+const { update } = require("../models/institution");
 const Institution = require("../models/institution");
 
 module.exports = {
-    async index(req, res) {
-        const { institutionId } = req;
-        try {
-            let animais = await Animal.findAll({
-                attributes: ["id", "url_foto_perfil", "nome", "personalidade", "idade", "castrado", "historia"],
-                include: [
-                    {
-                        association: "TypeAnimal",
-                        attributes: ["tipo"],
-                    },
-                ],
-                where: { institution_id: institutionId },
-                order: [["created_at", "DESC"]]
-            });
+  async index(req, res) {
+    const { institutionId } = req;
+    try {
+      let animais = await Animal.findAll({
+        attributes: [
+          "id",
+          "url_foto_perfil",
+          "nome",
+          "personalidade",
+          "idade",
+          "castrado",
+          "historia",
+        ],
+        include: [
+          {
+            association: "TypeAnimal",
+            attributes: ["tipo"],
+          },
+        ],
+        where: { institution_id: institutionId },
+        order: [["created_at", "DESC"]],
+      });
 
-            res.status(201).send(animais);
-        } catch (error) {
-            console.log(error);
-            return res.status(500).send(error)
-        }
+      res.status(201).send(animais);
+    } catch (error) {
+      console.log(error);
+      return res.status(500).send(error);
+    }
+  },
+  async find(req, res) {
+    const { id } = req.params;
 
+    try {
+      let animais = await Animal.findByPk(id, {
+        attributes: [
+          "id",
+          "url_foto_perfil",
+          "nome",
+          "personalidade",
+          "idade",
+          "castrado",
+          "historia",
+        ],
+        include: [
+          {
+            association: "TypeAnimal",
+            attributes: ["tipo"],
+          },
+          {
+            association: "Institution",
+            attributes: ["id", "nome"],
+          },
+        ],
+      });
 
-    },
-    async find(req, res) {
-        const { id } = req.params;
+      res.status(201).send(animais);
+    } catch (error) {
+      console.log(error);
+      return res.status(500).send(error);
+    }
+  },
+  async store(req, res) {
+    const {
+      nome,
+      personalidade,
+      idade,
+      castrado,
+      historia,
+      tipoAnimal,
+      condicaoEspecial,
+    } = req.body;
 
-        try {
+    let firebaseUrl = null;
+    if (req.file) {
+      firebaseUrl = req.file.firebaseUrl;
+    }
 
-            let animais = await Animal.findByPk(id, {
-                attributes: ["id", "url_foto_perfil", "nome", "personalidade", "idade", "castrado", "historia"],
-                include: [
-                    {
-                        association: "TypeAnimal",
-                        attributes: ["tipo"],
-                    },
-                    {
-                        association: "Institution",
-                        attributes: ["id", "nome"],
-                    }
-                ],
-            });
+    const { institutionId } = req;
 
-            res.status(201).send(animais);
+    if (!nome || !castrado || !historia || !firebaseUrl) {
+      return res.status(400).send({ error: "Faltam alguns dados" });
+    }
 
-        } catch (error) {
-            console.log(error);
-            return res.status(500).send(error)
-        }
-    },
-    async store(req, res) {
-        let { nome, personalidade, idade, castrado, historia, tipoAnimal, condicaoEspecial } = req.body;
+    try {
+      let institution = await Institution.findByPk(institutionId);
 
-        const { firebaseUrl } = req.file;
+      if (!institution) {
+        return res.status(404).send({ error: "Instituição não encontrada" });
+      }
 
-        const { institutionId } = req;
+      let animal = await Animal.create({
+        url_foto_perfil: firebaseUrl,
+        nome,
+        personalidade,
+        idade,
+        castrado,
+        historia,
+        type_animal_id: tipoAnimal,
+        institution_id: institutionId,
+      });
 
+      await animal.addSpecialCondition(condicaoEspecial);
 
-        if (!nome || !castrado || !historia || !firebaseUrl) {
-            return res.status(400).send({ error: "Faltam alguns dados" });
-        }
+      res.status(201).send(animal);
+    } catch (error) {
+      console.log(error);
+      res.status(500).send(error);
+    }
+  },
+  async update(req, res) {
+    const { nome, personalidade, idade, castrado, historia } = req.body;
 
+    let firebaseUrl = "";
+    if (req.file) {
+      firebaseUrl = req.file.firebaseUrl;
+    }
 
+    const { id } = req.params;
 
-        try {
-            let institution = await Institution.findByPk(institutionId);
+    if (!nome || !castrado || !historia || !firebaseUrl) {
+      return res.status(400).send({ error: "Faltam alguns dados" });
+    }
 
-            if (!institution) {
-                return res.status(404).send({ error: "Instituição não encontrada" });
-            }
+    try {
+      let animal = await Animal.findByPk(id);
 
-            let animal = await Animal.create({
-                url_foto_perfil: firebaseUrl,
-                nome,
-                personalidade,
-                idade,
-                castrado,
-                historia,
-                type_animal_id: tipoAnimal,
-                institution_id: institutionId,
-            });
+      if (!animal) {
+        return res.status(404).send({ error: "Animal não encontrado" });
+      }
 
-            await animal.addSpecialCondition(condicaoEspecial);
+      animal.nome = nome;
+      animal.personalidade = personalidade;
+      animal.idade = idade;
+      animal.castrado = castrado;
+      animal.historia = historia;
+    } catch (error) {
+      console.log(error);
+      res.status(500).send(error);
+    }
+  },
+  async delete(req, res) {
+    const { id } = req.params;
 
-            res.status(201).send(animal);
-        } catch (error) {
-            console.log(error);
-            res.status(500).send(error)
-        }
+    try {
+      let animal = await Animal.findByPk(id);
 
-    },
-}
+      if (!animal) {
+        return res.status(404).send({ error: "Animal não encontrado" });
+      }
+
+      await animal.destroy();
+
+      return res.status(201).send({ mensagem: "Animal excluido com sucesso" });
+    } catch (error) {
+      console.log(error);
+      res.status(500).send(error);
+    }
+  },
+};

@@ -1,15 +1,13 @@
-
 const admin = require("firebase-admin");
 
 const serviceAccount = require("../config/firebase-key");
 
-const BUCKET = "findpet-c274d.appspot.com"
+const BUCKET = "findpet-c274d.appspot.com";
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   storageBucket: BUCKET,
 });
-
 
 const bucket = admin.storage().bucket();
 

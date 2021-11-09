@@ -3,9 +3,7 @@ const Cep = require("../models/Cep");
 const Campaigns = require("../models/Campaigns");
 
 module.exports = {
-
   async index(req, res) {
-
     const { institutionId } = req;
 
     try {
@@ -21,25 +19,23 @@ module.exports = {
           "data_inicio",
           "data_fim",
           "hora_inicio",
-          "hora_fim"
+          "hora_fim",
         ],
         include: [
           {
             association: "Cep",
-            attributes: ["cep"]
-          }
+            attributes: ["cep"],
+          },
         ],
         where: { institution_id: institutionId },
-        order: [["created_at", "DESC"]]
+        order: [["created_at", "DESC"]],
       });
 
       res.status(200).send(campaigns);
-
     } catch (error) {
       console.log(error);
       res.status(500).send({ error });
     }
-
   },
   async find(req, res) {
     const { id } = req.params;
@@ -47,13 +43,11 @@ module.exports = {
     try {
       const campaign = await Campaigns.findByPk(id);
 
-      res.status(200).send([campaign]);
-
+      res.status(200).send(campaign);
     } catch (error) {
       console.log(error);
       res.status(500).send(error);
     }
-
   },
   async store(req, res) {
     const {
@@ -70,7 +64,10 @@ module.exports = {
       hora_fim,
     } = req.body;
 
-    const { firebaseUrl } = req.file;
+    let firebaseUrl = null;
+    if (req.file) {
+      firebaseUrl = req.file.firebaseUrl;
+    }
 
     const { institutionId } = req;
 
@@ -101,7 +98,7 @@ module.exports = {
 
       let newCep = await Cep.findOne({
         where: {
-          cep
+          cep,
         },
       });
 
@@ -130,12 +127,9 @@ module.exports = {
       res.status(200).send({
         campanha,
       });
-
     } catch (error) {
-
       console.log(error);
       res.status(500).send(error);
-
     }
   },
   async update(req, res) {
@@ -153,7 +147,7 @@ module.exports = {
       hora_fim,
     } = req.body;
 
-    let firebaseUrl = ""
+    let firebaseUrl = "";
     if (req.file) {
       firebaseUrl = req.file.firebaseUrl;
     }
@@ -184,13 +178,14 @@ module.exports = {
 
       campanha.titulo = titulo;
       campanha.descricao = descricao;
-      campanha.data_inicio = data_inicio
+      campanha.data_inicio = data_inicio;
       campanha.data_fim = data_fim;
       campanha.hora_inicio = hora_inicio;
       campanha.hora_fim = hora_fim;
       campanha.cep = cep;
       campanha.cidade = cidade;
       campanha.logradouro = logradouro;
+      campanha.complemento = complemento;
       campanha.numero = numero;
       if (firebaseUrl) {
         campanha.url_foto = firebaseUrl;
@@ -203,7 +198,6 @@ module.exports = {
       console.log(error);
       res.status(500).send(error);
     }
-
   },
   async delete(req, res) {
     const { id } = req.params;
@@ -218,10 +212,9 @@ module.exports = {
       await campanha.destroy();
 
       res.status(201).send({ mensagem: "funcionario excluido co msucesso" });
-
     } catch (error) {
       console.log(error);
       res.status(500).send(error);
     }
-  }
+  },
 };

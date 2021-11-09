@@ -56,7 +56,6 @@ Employee.associate(connection.models);
 Position.associate(connection.models);
 Service.associate(connection.models);
 
-
 // for (let assoc of Object.keys(Service.associations)){
 //     for (let accessor of Object.keys(Service.associations[assoc].accessors)) {
 //         console.log(Service.name + '.' + Service.associations[assoc].accessors[accessor] + '()');

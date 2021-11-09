@@ -45,18 +45,63 @@ routes.get("/servicos", servicesController.index);
 routes.get("/cargos", positionController.index);
 
 routes.post("/apoios/:id", supportController.store);
-routes.post("/instituicoes/:id/descricao", descriptionInstitutionController.store);
-routes.post("/campanhas", uploadSingleImage, uploadFirebase, campaignsController.store);
-routes.post("/animais", uploadSingleImage, uploadFirebase, animalController.store);
-routes.post("/funcionarios", uploadSingleImage, uploadFirebase, employeeController.store)
+routes.post(
+  "/instituicoes/:id/descricao",
+  descriptionInstitutionController.store
+);
+routes.post(
+  "/campanhas",
+  uploadSingleImage,
+  uploadFirebase,
+  campaignsController.store
+);
+routes.post(
+  "/animais",
+  uploadSingleImage,
+  uploadFirebase,
+  animalController.store
+);
+routes.post(
+  "/funcionarios",
+  uploadSingleImage,
+  uploadFirebase,
+  employeeController.store
+);
 routes.post("/servicos", institutionServicesController.store);
 
-routes.put("/instituicoes/:id/banner", uploadSingleImage, uploadFirebase, imageBannerInstitutionController.update);
-routes.put("/instituicoes/:id/perfil", uploadSingleImage, uploadFirebase, imagePerfilInstitutionController.update);
-routes.put("/funcionarios/:id", uploadSingleImage, uploadFirebase, employeeController.update);
-routes.put("/campanhas/:id", uploadSingleImage, uploadFirebase, campaignsController.update);
+routes.put(
+  "/instituicoes/:id/banner",
+  uploadSingleImage,
+  uploadFirebase,
+  imageBannerInstitutionController.update
+);
+routes.put(
+  "/instituicoes/:id/perfil",
+  uploadSingleImage,
+  uploadFirebase,
+  imagePerfilInstitutionController.update
+);
+routes.put(
+  "/funcionarios/:id",
+  uploadSingleImage,
+  uploadFirebase,
+  employeeController.update
+);
+routes.put(
+  "/campanhas/:id",
+  uploadSingleImage,
+  uploadFirebase,
+  campaignsController.update
+);
+routes.put(
+  "/animais/:id",
+  uploadSingleImage,
+  uploadFirebase,
+  animalController.update
+);
 
 routes.delete("/funcionarios/:id", employeeController.delete);
 routes.delete("/campanhas/:id", campaignsController.delete);
+routes.delete("/animais/:id", animalController.delete);
 
 module.exports = routes;
