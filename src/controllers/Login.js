@@ -14,6 +14,12 @@ module.exports = {
 
     try {
       const user = await User.findOne({
+        include: [
+          {
+            association: "Cep",
+            attributes: ["cep"],
+          },
+        ],
         where: {
           email,
         },
@@ -21,6 +27,26 @@ module.exports = {
 
       if (!user) {
         const institution = await Institution.findOne({
+          include: [
+            {
+              association: "TelephoneInstitutions",
+              attributes: ["numero"],
+            },
+            {
+              association: "TypeInstitution",
+              attributes: ["id","type_institution"],
+            },
+            {
+              association: "AddressInstitutions",
+              attributes: ["logradouro", "numero", "complemento"],
+              include: [
+                {
+                  association: "Cep",
+                  attributes: ["cep"],
+                },
+              ],
+            },
+          ],
           where: {
             email,
           },
@@ -43,15 +69,45 @@ module.exports = {
           }
         );
 
-        return setTimeout(() => {
-          return res.status(201).send({
-            instuticao: {
-              email,
-              senha,
-            },
-            token,
-          });
-        }, 3000);
+        let telefone = "";
+        let celular = "";
+        institution.TelephoneInstitutions.map((t) => {
+          if (t.numero.length === 9) {
+            telefone = t.numero;
+          }
+          celular = t.numero;
+        });
+
+        let numero = "";
+        let logradouro = "";
+        let complemento = "";
+        let cep = "";
+        institution.AddressInstitutions.map((e) => {
+          numero = e.numero;
+          logradouro = e.logradouro;
+          complemento = e.complemento;
+          cep = e.Cep.cep;
+        });
+
+        return res.status(201).send({
+          id: institution.getDataValue("id"),
+          nome: institution.getDataValue("nome"),
+          email: institution.getDataValue("email"),
+          senha: institution.getDataValue("senha"),
+          url_foto_perfil: institution.getDataValue("url_foto_perfil"),
+          url_foto_banner: institution.getDataValue("url_foto_banner"),
+          cnpj: institution.getDataValue("cnpj"),
+          tipoEstabelecimento: institution
+            .getDataValue("TypeInstitution")
+            .getDataValue("id"),
+          telefone,
+          celular,
+          logradouro,
+          numero,
+          complemento,
+          cep,
+          token,
+        });
       }
 
       if (!user || !bcrypt.compareSync(senha, user.senha)) {
@@ -68,8 +124,6 @@ module.exports = {
         }
       );
 
-      console.log(user.getDataValue("id"));
-
       return res.status(201).send({
         id: user.getDataValue("id"),
         nome: user.getDataValue("nome"),
@@ -80,6 +134,7 @@ module.exports = {
         logradouro: user.getDataValue("logradouro"),
         numero: user.getDataValue("numero"),
         complemento: user.getDataValue("complemento"),
+        cep: user.getDataValue("Cep").getDataValue("cep"),
         token,
       });
     } catch (error) {
