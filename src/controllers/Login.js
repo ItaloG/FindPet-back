@@ -106,6 +106,7 @@ module.exports = {
           numero,
           complemento,
           cep,
+          tipo_usuario: "instituicao",
           token,
         });
       }
@@ -135,6 +136,7 @@ module.exports = {
         numero: user.getDataValue("numero"),
         complemento: user.getDataValue("complemento"),
         cep: user.getDataValue("Cep").getDataValue("cep"),
+        tipo_usuario: "comum",
         token,
       });
     } catch (error) {
