@@ -138,6 +138,11 @@ module.exports = {
       animal.idade = idade;
       animal.castrado = castrado;
       animal.historia = historia;
+
+      animal.save();
+
+      res.status(201).send(animal);
+
     } catch (error) {
       console.log(error);
       res.status(500).send(error);
