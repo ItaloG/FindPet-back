@@ -39,9 +39,31 @@ module.exports = {
   },
   async find(req, res) {
     const { id } = req.params;
-
+    const { institutionId } = req;
     try {
-      const campaign = await Campaigns.findByPk(id);
+      const campaign = await Campaigns.findByPk(id, {
+        attributes: [
+          "id",
+          "logradouro",
+          "complemento",
+          "url_foto",
+          "cidade",
+          "titulo",
+          "descricao",
+          "data_inicio",
+          "data_fim",
+          "hora_inicio",
+          "hora_fim",
+        ],
+        include: [
+          {
+            association: "Cep",
+            attributes: ["cep"],
+          },
+        ],
+        where: { institution_id: institutionId },
+        order: [["created_at", "DESC"]],
+      });
 
       res.status(200).send(campaign);
     } catch (error) {
