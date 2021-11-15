@@ -18,6 +18,7 @@ const Employee = require("../models/Employee");
 const Position = require("../models/Position");
 const Service = require("../models/Service");
 const InstitutionService = require("../models/InstitutionService");
+const AnimalSpecialCondition = require("../models/AnimalSpecialCondition");
 
 const connection = new Sequelize(dbConfig.url, dbConfig.config);
 
@@ -38,6 +39,7 @@ Employee.init(connection);
 Position.init(connection);
 Service.init(connection);
 InstitutionService.init(connection);
+AnimalSpecialCondition.init(connection);
 
 Institution.associate(connection.models);
 TelephoneInstitution.associate(connection.models);

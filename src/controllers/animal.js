@@ -1,5 +1,7 @@
 const Animal = require("../models/Animal");
+const AnimalSpecialCondition = require("../models/AnimalSpecialCondition");
 const Institution = require("../models/institution");
+const SpecialCondition = require("../models/SpecialCondition");
 
 module.exports = {
   async index(req, res) {
@@ -105,9 +107,9 @@ module.exports = {
 
       const condicoesEpeciaisArray = condicoesEpeciais.split(",");
 
-      console.log(condicoesEpeciaisArray);
-
-      await animal.addSpecialCondition(condicoesEpeciaisArray);
+      if (condicoesEpeciaisArray[0] !== "") {
+        await animal.addSpecialCondition(condicoesEpeciaisArray);
+      }
 
       res.status(201).send(animal);
     } catch (error) {
@@ -155,12 +157,23 @@ module.exports = {
     const { id } = req.params;
 
     try {
-      let animal = await Animal.findByPk(id);
+      let animal = await Animal.findOne({
+        where: {
+          id
+        }
+      });
+
+      let animalSpecialCondition = await AnimalSpecialCondition.findOne({
+        where: {
+          animal_id: id,
+        }
+      })
 
       if (!animal) {
         return res.status(404).send({ error: "Animal não encontrado" });
       }
 
+      await animalSpecialCondition.destroy();
       await animal.destroy();
 
       return res.status(201).send({ mensagem: "Animal excluido com sucesso" });
