@@ -46,6 +46,7 @@ module.exports = {
           "id",
           "logradouro",
           "complemento",
+          "numero",
           "url_foto",
           "cidade",
           "titulo",

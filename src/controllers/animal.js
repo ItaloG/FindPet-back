@@ -1,5 +1,4 @@
 const Animal = require("../models/Animal");
-const { update } = require("../models/institution");
 const Institution = require("../models/institution");
 
 module.exports = {
@@ -72,7 +71,7 @@ module.exports = {
       castrado,
       historia,
       tipoAnimal,
-      condicaoEspecial,
+      condicoesEpeciais,
     } = req.body;
 
     let firebaseUrl = null;
@@ -104,7 +103,11 @@ module.exports = {
         institution_id: institutionId,
       });
 
-      await animal.addSpecialCondition(condicaoEspecial);
+      const condicoesEpeciaisArray = condicoesEpeciais.split(",");
+
+      console.log(condicoesEpeciaisArray);
+
+      await animal.addSpecialCondition(condicoesEpeciaisArray);
 
       res.status(201).send(animal);
     } catch (error) {

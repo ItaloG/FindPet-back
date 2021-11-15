@@ -19,6 +19,8 @@ const employeeController = require("./controllers/employee");
 const servicesController = require("./controllers/service");
 const institutionServicesController = require("./controllers/institutionService");
 const positionController = require("./controllers/position");
+const typeAnimalController = require("./controllers/typeAnimal");
+const specialConditionController = require("./controllers/specialCondition");
 
 //rotas publicas
 routes.post("/login", loginContoller.store);
@@ -39,6 +41,8 @@ routes.get("/campanhas", campaignsController.index);
 routes.get("/campanhas/:id", campaignsController.find);
 routes.get("/animais", animalController.index);
 routes.get("/animais/:id", animalController.find);
+routes.get("/tiposAnimal", typeAnimalController.index);
+routes.get("/condicoesEspeciais", specialConditionController.index);
 routes.get("/funcionarios", employeeController.index);
 routes.get("/funcionarios/:id", employeeController.find);
 routes.get("/servicos", servicesController.index);
