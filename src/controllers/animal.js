@@ -157,24 +157,26 @@ module.exports = {
     const { id } = req.params;
 
     try {
-      let animal = await Animal.findOne({
-        where: {
-          id
-        }
-      });
-
-      let animalSpecialCondition = await AnimalSpecialCondition.findOne({
-        where: {
-          animal_id: id,
-        }
-      })
+      let animal = await Animal.findByPk(id);
 
       if (!animal) {
         return res.status(404).send({ error: "Animal não encontrado" });
       }
 
-      await animalSpecialCondition.destroy();
-      await animal.destroy();
+      let animalSpecialConditionRow = await AnimalSpecialCondition.findOne({
+        where: {
+          animal_id: id
+        }
+      });
+
+      await animalSpecialConditionRow.destroy();
+
+      const deleteAnimal = async () => {
+        await animal.destroy();
+      }
+      setTimeout(() => {
+        deleteAnimal()
+      }, 2000);
 
       return res.status(201).send({ mensagem: "Animal excluido com sucesso" });
     } catch (error) {
