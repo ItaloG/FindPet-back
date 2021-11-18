@@ -2,6 +2,7 @@ const Institution = require("../models/institution");
 
 module.exports = {
   async update(req, res) {
+    // console.log(req.headers);
     const { firebaseUrl } = req.file;
 
     if (!firebaseUrl) {

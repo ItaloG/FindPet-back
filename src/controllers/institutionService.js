@@ -5,28 +5,35 @@ module.exports = {
     const { servicos } = req.body;
     const { institutionId } = req;
 
-    const hasDuplicados = (a) => {
-      return new Set(a).size !== a.length;
-    };
-
-    if (hasDuplicados(servicos)) {
-      return res.status(400).send({ error: "Você possui servicos repetidos" });
-    }
-
     try {
-      let newServicos = [];
-      for (let index = 0; index < servicos.length; index++) {
-        const servicoAux = await InstitutionService.create({
-          institution_id: institutionId,
-          service_id: servicos[index],
-        });
-        newServicos.push(servicoAux);
-      }
+      const servico = await InstitutionService.create({
+        institution_id: institutionId,
+        service_id: servicos,
+      });
 
-      res.status(201).send(newServicos);
+      res.status(201).send(servico);
     } catch (error) {
       console.log(error);
       return res.status(500).send(error);
+    }
+  },
+
+  async delete(req, res) {
+    const { id } = req.params;
+
+    try {
+      let servicoInstituicaoRow = await InstitutionService.findOne({
+        where: {
+          service_id: id,
+        },
+      });
+
+      if (!servicoInstituicaoRow) {
+        return res.status(404).send({ error: "servico não encontrado" })
+      }
+    } catch (error) {
+      console.log(error);
+      res.status(500).send(error);
     }
   },
 };
