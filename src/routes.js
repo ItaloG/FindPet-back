@@ -49,10 +49,7 @@ routes.get("/servicos", servicesController.index);
 routes.get("/cargos", positionController.index);
 
 routes.post("/apoios/:id", supportController.store);
-routes.post(
-  "/instituicoes/:id/descricao",
-  descriptionInstitutionController.store
-);
+
 routes.post(
   "/campanhas",
   uploadSingleImage,
@@ -79,11 +76,17 @@ routes.put(
   uploadFirebase,
   imageBannerInstitutionController.update
 );
+
 routes.put(
   "/instituicoes/:id/perfil",
   uploadSingleImage,
   uploadFirebase,
   imagePerfilInstitutionController.update
+);
+
+routes.put(
+  "/instituicoes/:id/descricao",
+  descriptionInstitutionController.update
 );
 routes.put(
   "/funcionarios/:id",
