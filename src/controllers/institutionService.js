@@ -31,6 +31,11 @@ module.exports = {
       if (!servicoInstituicaoRow) {
         return res.status(404).send({ error: "servico não encontrado" })
       }
+
+      servicoInstituicaoRow.destroy()
+
+      return res.status(200).send({ mensagem: "servico desassociado com sucesso" })
+
     } catch (error) {
       console.log(error);
       res.status(500).send(error);

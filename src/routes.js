@@ -107,5 +107,6 @@ routes.put(
 routes.delete("/funcionarios/:id", employeeController.delete);
 routes.delete("/campanhas/:id", campaignsController.delete);
 routes.delete("/animais/:id", animalController.delete);
+routes.delete("/servicos/:id", institutionServicesController.delete);
 
 module.exports = routes;
