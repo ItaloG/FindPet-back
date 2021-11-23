@@ -107,6 +107,7 @@ module.exports = {
           complemento,
           cep,
           tipo_usuario: "instituicao",
+          descricao: institution.getDataValue("descricao"),
           token,
         });
       }

@@ -134,6 +134,7 @@ module.exports = {
         email,
         senha: senhaHashed,
         cnpj,
+        descricao: "Inssira uma descrição para que todos saibam o que você faz",
         type_institution_id: tipoEstabelecimento,
       });
 
@@ -200,6 +201,7 @@ module.exports = {
         numero: address.numero,
         complemento: address.complemento,
         cep: newCep.cep,
+        descricao: institution.descricao,
         token,
       });
     } catch (error) {

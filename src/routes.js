@@ -21,6 +21,7 @@ const institutionServicesController = require("./controllers/institutionService"
 const positionController = require("./controllers/position");
 const typeAnimalController = require("./controllers/typeAnimal");
 const specialConditionController = require("./controllers/specialCondition");
+const convertBase64Image = require("./middlewares/converterBase64Image");
 
 //rotas publicas
 routes.post("/login", loginContoller.store);
@@ -80,8 +81,12 @@ routes.put(
 routes.put(
   "/instituicoes/:id/perfil",
   uploadSingleImage,
-  uploadFirebase,
-  imagePerfilInstitutionController.update
+  convertBase64Image,
+  (req, res) => {
+    return res.send({mensagem: "foi"})
+  }
+  // uploadFirebase,
+  // imagePerfilInstitutionController.update
 );
 
 routes.put(
