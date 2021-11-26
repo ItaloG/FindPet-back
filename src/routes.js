@@ -35,6 +35,7 @@ routes.get("/instituicoes", institutionController.index);
 routes.use(authInstitution);
 routes.get("/instituicoes", institutionController.index);
 routes.get("/instituicoes/:id", institutionController.find);
+routes.get("/instituicoes/:id/servicos", institutionServicesController.find);
 routes.get("/apoios", supportController.index);
 routes.get("/apoios/:id", supportController.find);
 routes.get("/campanhas", campaignsController.index);
