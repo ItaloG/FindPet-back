@@ -12,7 +12,6 @@ admin.initializeApp({
 const bucket = admin.storage().bucket();
 
 const uploadFirebase = (req, res, next) => {
-  console.log(req.file);
   if (!req.file) return next();
 
   const image = req.file;

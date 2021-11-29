@@ -21,7 +21,8 @@ const institutionServicesController = require("./controllers/institutionService"
 const positionController = require("./controllers/position");
 const typeAnimalController = require("./controllers/typeAnimal");
 const specialConditionController = require("./controllers/specialCondition");
-const convertBase64Image = require("./middlewares/converterBase64Image");
+const userBannerController = require("./controllers/userBanner");
+const userPerfilrController = require("./controllers/userPerfil");
 
 //rotas publicas
 routes.post("/login", loginContoller.store);
@@ -31,9 +32,32 @@ routes.get("/tipoInstituicoes", typeInstitution.index);
 
 //rotas privadas
 routes.use(authUser);
+
 routes.get("/instituicoes", institutionController.index);
+routes.get("/instituicoes/:id", institutionController.find);
+routes.get("/instituicoes/:id/servicos", institutionServicesController.find);
+routes.get("/apoios", supportController.index);
+routes.get("/apoios/:id", supportController.find);
+routes.get("/campanhas", campaignsController.index);
+routes.get("/campanhas/:id", campaignsController.find);
+routes.get("/animais", animalController.index);
+routes.get("/animais/:id", animalController.find);
+routes.get("/funcionarios", employeeController.index);
+
+routes.put("/usuarios/:id/banner",
+  uploadSingleImage,
+  uploadFirebase,
+  userBannerController.update
+);
+
+routes.put("/usuarios/:id/perfil",
+  uploadSingleImage,
+  uploadFirebase,
+  userPerfilrController.update
+);
 
 routes.use(authInstitution);
+
 routes.get("/instituicoes", institutionController.index);
 routes.get("/instituicoes/:id", institutionController.find);
 routes.get("/instituicoes/:id/servicos", institutionServicesController.find);
@@ -82,12 +106,8 @@ routes.put(
 routes.put(
   "/instituicoes/:id/perfil",
   uploadSingleImage,
-  convertBase64Image,
-  (req, res) => {
-    return res.send({mensagem: "foi"})
-  }
-  // uploadFirebase,
-  // imagePerfilInstitutionController.update
+  uploadFirebase,
+  imagePerfilInstitutionController.update
 );
 
 routes.put(
