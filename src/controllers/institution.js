@@ -6,7 +6,6 @@ const auth = require("../config/auth");
 
 module.exports = {
   async index(req, res) {
-
     try {
       const institutions = await Institution.findAll({
         attributes: ["id", "nome", "url_foto_perfil", "url_foto_banner"],
@@ -22,12 +21,10 @@ module.exports = {
       res.status(200).send({
         institutions,
       });
-
     } catch (error) {
       console.log(error);
       res.status(500).send({ error });
     }
-
   },
 
   async find(req, res) {
@@ -35,18 +32,40 @@ module.exports = {
 
     try {
       const institution = await Institution.findByPk(id, {
-        attributes: ["id", "nome"],
+        attributes: [
+          "id",
+          "nome",
+          "email",
+          "url_foto_banner",
+          "url_foto_perfil",
+        ],
         include: [
+          {
+            association: "TelephoneInstitutions",
+            attributes: ["numero"],
+          },
           {
             association: "TypeInstitution",
             attributes: ["type_institution"],
           },
-        ]
+          {
+            association: "Services",
+            attributes: ["id", "servico"],
+          },
+          {
+            association: "AddressInstitutions",
+            attributes: ["logradouro", "numero", "complemento"],
+            include: [
+              {
+                association: "Cep",
+                attributes: ["cep"],
+              },
+            ],
+          },
+        ],
       });
 
-      res.status(200).send({
-        institution,
-      });
+      res.status(200).send(institution);
     } catch (error) {
       console.log(error);
       res.status(500).send(error);
@@ -115,6 +134,7 @@ module.exports = {
         email,
         senha: senhaHashed,
         cnpj,
+        descricao: "Inssira uma descrição para que todos saibam o que você faz",
         type_institution_id: tipoEstabelecimento,
       });
 
@@ -129,7 +149,6 @@ module.exports = {
           .status(400)
           .send({ error: "Você deve informar um telefone ou celular." });
       }
-
 
       let telephone = "";
 
@@ -158,28 +177,33 @@ module.exports = {
         cep_id: newCep.id,
       });
 
-      const token = jwt.sign({
-        institutionId: institution.id
-      },
-        auth.secret, {
-        expiresIn: "24h"
-      });
+      const token = jwt.sign(
+        {
+          institutionId: institution.id,
+          perfil: "institution",
+        },
+        auth.secret,
+        {
+          expiresIn: "24h",
+        }
+      );
 
       res.status(201).send({
+        id: institution.id,
         nome: institution.nome,
         email: institution.email,
         senha: institution.senha,
         cnpj: institution.cnpj,
-        tipoEstab: tipoEstabelecimento,
-        tell: telephone,
-        cell: cellphone.numero,
-        rua: address.logradouro,
-        num: address.numero,
-        comp: address.complemento,
-        seuCep: newCep.cep,
+        tipoEstabelecimento: tipoEstabelecimento,
+        telefone: telephone,
+        celular: cellphone,
+        logradouro: address.logradouro,
+        numero: address.numero,
+        complemento: address.complemento,
+        cep: newCep.cep,
+        descricao: institution.descricao,
         token,
       });
-
     } catch (error) {
       console.log(error);
       res.status(500).send(error);

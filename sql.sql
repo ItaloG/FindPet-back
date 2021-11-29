@@ -30,6 +30,16 @@ INSERT INTO `positions` (`cargo`, `created_at`, `updated_at`) VALUES ('Cuidador'
 INSERT INTO `positions` (`cargo`, `created_at`, `updated_at`) VALUES ('Veterinário', current_timestamp(), current_timestamp());
 INSERT INTO `positions` (`cargo`, `created_at`, `updated_at`) VALUES ('Faxineiro', current_timestamp(), current_timestamp());
 
+INSERT INTO `services` (`servico`, `created_at`, `updated_at`) VALUES ('Doação', current_timestamp(), current_timestamp());
+INSERT INTO `services` (`servico`, `created_at`, `updated_at`) VALUES ('Banho e tosa', current_timestamp(), current_timestamp());
+INSERT INTO `services` (`servico`, `created_at`, `updated_at`) VALUES ('Veterinaria', current_timestamp(), current_timestamp());
+INSERT INTO `services` (`servico`, `created_at`, `updated_at`) VALUES ('Hotel', current_timestamp(), current_timestamp());
+INSERT INTO `services` (`servico`, `created_at`, `updated_at`) VALUES ('Adestração', current_timestamp(), current_timestamp());
+INSERT INTO `services` (`servico`, `created_at`, `updated_at`) VALUES ('Venda de cosméticos', current_timestamp(), current_timestamp());
+INSERT INTO `services` (`servico`, `created_at`, `updated_at`) VALUES ('Venda de remédios', current_timestamp(), current_timestamp());
+INSERT INTO `services` (`servico`, `created_at`, `updated_at`) VALUES ('Venda de ração', current_timestamp(), current_timestamp());
+INSERT INTO `services` (`servico`, `created_at`, `updated_at`) VALUES ('Castração', current_timestamp(), current_timestamp());
+
 use findpet_db;
 
 create table users (
@@ -158,6 +168,7 @@ create table campaigns (
     institution_id int not null,
     cep_id int not null,
     numero int not null,
+    ciadde varchar(255) not null,
     logradouro varchar(255) not null,
     complemento varchar(255) not null,
 	url_foto varchar(255) not null,
@@ -248,4 +259,25 @@ create table employees(
     constraint FK_positions_employees
     foreign key (position_id)
     references positions (id)
+);
+
+create table services(
+	id int not null auto_increment primary key,
+    servico varchar(255) not null,
+	created_at datetime,
+    updated_at datetime
+);
+
+create table institution_services(
+	id int not null auto_increment primary key,
+    institution_id int not null,
+    service_id int not null,
+    created_at datetime,
+    updated_at datetime,
+    constraint FK_institutions_institution_service
+    foreign key (institution_id)
+    references institutions (id),
+    constraint FK_services_institution_service
+    foreign key (service_id)
+    references services (id)
 );

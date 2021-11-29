@@ -16,6 +16,13 @@ const typeInstitution = require("./controllers/typeInstitution");
 const campaignsController = require("./controllers/campaigns");
 const animalController = require("./controllers/animal");
 const employeeController = require("./controllers/employee");
+const servicesController = require("./controllers/service");
+const institutionServicesController = require("./controllers/institutionService");
+const positionController = require("./controllers/position");
+const typeAnimalController = require("./controllers/typeAnimal");
+const specialConditionController = require("./controllers/specialCondition");
+const userBannerController = require("./controllers/userBanner");
+const userPerfilrController = require("./controllers/userPerfil");
 
 //rotas publicas
 routes.post("/login", loginContoller.store);
@@ -25,11 +32,10 @@ routes.get("/tipoInstituicoes", typeInstitution.index);
 
 //rotas privadas
 routes.use(authUser);
-routes.get("/instituicoes", institutionController.index);
 
-routes.use(authInstitution);
 routes.get("/instituicoes", institutionController.index);
 routes.get("/instituicoes/:id", institutionController.find);
+routes.get("/instituicoes/:id/servicos", institutionServicesController.find);
 routes.get("/apoios", supportController.index);
 routes.get("/apoios/:id", supportController.find);
 routes.get("/campanhas", campaignsController.index);
@@ -37,14 +43,99 @@ routes.get("/campanhas/:id", campaignsController.find);
 routes.get("/animais", animalController.index);
 routes.get("/animais/:id", animalController.find);
 routes.get("/funcionarios", employeeController.index);
+
+routes.put("/usuarios/:id/banner",
+  uploadSingleImage,
+  uploadFirebase,
+  userBannerController.update
+);
+
+routes.put("/usuarios/:id/perfil",
+  uploadSingleImage,
+  uploadFirebase,
+  userPerfilrController.update
+);
+
+routes.use(authInstitution);
+
+routes.get("/instituicoes", institutionController.index);
+routes.get("/instituicoes/:id", institutionController.find);
+routes.get("/instituicoes/:id/servicos", institutionServicesController.find);
+routes.get("/apoios", supportController.index);
+routes.get("/apoios/:id", supportController.find);
+routes.get("/campanhas", campaignsController.index);
+routes.get("/campanhas/:id", campaignsController.find);
+routes.get("/animais", animalController.index);
+routes.get("/animais/:id", animalController.find);
+routes.get("/tiposAnimal", typeAnimalController.index);
+routes.get("/condicoesEspeciais", specialConditionController.index);
+routes.get("/funcionarios", employeeController.index);
 routes.get("/funcionarios/:id", employeeController.find);
+routes.get("/servicos", servicesController.index);
+routes.get("/cargos", positionController.index);
 
 routes.post("/apoios/:id", supportController.store);
-routes.post("/instituicoes/:id/perfil", uploadSingleImage, uploadFirebase, imagePerfilInstitutionController.store);
-routes.post("/instituicoes/:id/banner", uploadSingleImage, uploadFirebase, imageBannerInstitutionController.store);
-routes.post("/instituicoes/:id/descricao", descriptionInstitutionController.store);
-routes.post("/campanhas", uploadSingleImage, uploadFirebase, campaignsController.store);
-routes.post("/animais", uploadSingleImage ,uploadFirebase, animalController.store);
-routes.post("/funcionarios", uploadSingleImage, uploadFirebase, employeeController.store)
+
+routes.post(
+  "/campanhas",
+  uploadSingleImage,
+  uploadFirebase,
+  campaignsController.store
+);
+routes.post(
+  "/animais",
+  uploadSingleImage,
+  uploadFirebase,
+  animalController.store
+);
+routes.post(
+  "/funcionarios",
+  uploadSingleImage,
+  uploadFirebase,
+  employeeController.store
+);
+routes.post("/servicos", institutionServicesController.store);
+
+routes.put(
+  "/instituicoes/:id/banner",
+  uploadSingleImage,
+  uploadFirebase,
+  imageBannerInstitutionController.update
+);
+
+routes.put(
+  "/instituicoes/:id/perfil",
+  uploadSingleImage,
+  uploadFirebase,
+  imagePerfilInstitutionController.update
+);
+
+routes.put(
+  "/instituicoes/:id/descricao",
+  descriptionInstitutionController.update
+);
+routes.put(
+  "/funcionarios/:id",
+  uploadSingleImage,
+  uploadFirebase,
+  employeeController.update
+);
+routes.put(
+  "/campanhas/:id",
+  uploadSingleImage,
+  uploadFirebase,
+  campaignsController.update
+);
+routes.put(
+  "/animais/:id",
+  uploadSingleImage,
+  uploadFirebase,
+  animalController.update
+);
+
+routes.delete("/funcionarios/:id", employeeController.delete);
+routes.delete("/campanhas/:id", campaignsController.delete);
+routes.delete("/animais/:id", animalController.delete);
+routes.delete("/servicos/:id", institutionServicesController.delete);
 
 module.exports = routes;

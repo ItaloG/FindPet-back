@@ -1,24 +1,27 @@
 const Institution = require("../models/institution");
 
 module.exports = {
-    async store(req, res) {
-        const { id } = req.params;
+  async update(req, res) {
+    const { id } = req.params;
 
-        const { descricao } = req.body;
+    const { descricao } = req.body;
 
-        let institution = await Institution.findByPk(id);
+    try {
+      let institution = await Institution.findByPk(id);
 
-        if(!institution)
-            return res.status(404).send({ error: "Instituição não encontrada" });
+      if (!institution)
+        return res.status(404).send({ error: "Instituição não encontrada" });
 
-        institution.descricao = descricao;
+      institution.descricao = descricao;
 
-        institution.save();
+      institution.save();
 
-        res.status(201).send({
-            instituicaoId: id,
-            descricao,
-        });
-
-    },
-}
+      res.status(201).send({
+        descricao,
+      });
+    } catch (error) {
+      console.log(error);
+      res.status(500).send(error);
+    }
+  },
+};
