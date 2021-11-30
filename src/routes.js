@@ -33,24 +33,28 @@ routes.get("/tipoInstituicoes", typeInstitution.index);
 //rotas privadas
 routes.use(authUser);
 
+routes.get("/usuarios/:id", userController.find);
+
 routes.get("/instituicoes", institutionController.index);
 routes.get("/instituicoes/:id", institutionController.find);
 routes.get("/instituicoes/:id/servicos", institutionServicesController.find);
 routes.get("/apoios", supportController.index);
 routes.get("/apoios/:id", supportController.find);
-routes.get("/campanhas", campaignsController.index);
-routes.get("/campanhas/:id", campaignsController.find);
-routes.get("/animais", animalController.index);
-routes.get("/animais/:id", animalController.find);
-routes.get("/funcionarios", employeeController.index);
+routes.get("/instituicao/:id/campanhas/", campaignsController.index);
+routes.get("/instituicao/campanhas/:id", campaignsController.find);
+routes.get("/instituicao/:id/animais", animalController.index);
+routes.get("/instituicao/animais/:id", animalController.find);
+routes.get("/instituicao/:id/funcionarios", employeeController.index);
 
-routes.put("/usuarios/:id/banner",
+routes.put(
+  "/usuarios/:id/banner",
   uploadSingleImage,
   uploadFirebase,
   userBannerController.update
 );
 
-routes.put("/usuarios/:id/perfil",
+routes.put(
+  "/usuarios/:id/perfil",
   uploadSingleImage,
   uploadFirebase,
   userPerfilrController.update

@@ -4,7 +4,10 @@ const sequelize = require("sequelize");
 
 module.exports = {
   async index(req, res) {
+    const { id } = req.params;
     const { institutionId } = req;
+
+
     try {
       let funcionarios = await Employee.findAll({
         attributes: [
@@ -45,7 +48,7 @@ module.exports = {
             attributes: ["cargo"],
           },
         ],
-        where: { institution_id: institutionId },
+        where: { institution_id: !institutionId ? id : institutionId },
       });
 
       res.status(201).send(funcionarios);

@@ -5,6 +5,39 @@ const jwt = require("jsonwebtoken");
 const auth = require("../config/auth");
 
 module.exports = {
+  async find(req, res) {
+    const { id } = req.params;
+
+    try {
+      const user = await User.findByPk(id, {
+        attributes: [
+          "id",
+          "nome",
+          "email",
+          "url_foto_banner",
+          "url_foto_perfil",
+          "logradouro",
+          "complemento",
+          "numero"
+        ],
+        include: [
+          {
+            association: "TelephoneUsers",
+            attributes: ["numero"]
+          },
+          {
+            association: "Cep",
+            attributes: ["cep"]
+          }
+        ]
+      });
+
+      return res.status(200).send(user);
+    } catch (error) {
+      console.log(error);
+      res.status(500).send(error);
+    }
+  },
   async store(req, res) {
     const {
       nome,
