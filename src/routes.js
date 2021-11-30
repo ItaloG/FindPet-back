@@ -33,6 +33,8 @@ routes.get("/tipoInstituicoes", typeInstitution.index);
 //rotas privadas
 routes.use(authUser);
 
+routes.get("/usuarios/:id", userController.find);
+
 routes.get("/instituicoes", institutionController.index);
 routes.get("/instituicoes/:id", institutionController.find);
 routes.get("/instituicoes/:id/servicos", institutionServicesController.find);
@@ -44,13 +46,15 @@ routes.get("/instituicao/:id/animais", animalController.index);
 routes.get("/instituicao/animais/:id", animalController.find);
 routes.get("/instituicao/:id/funcionarios", employeeController.index);
 
-routes.put("/usuarios/:id/banner",
+routes.put(
+  "/usuarios/:id/banner",
   uploadSingleImage,
   uploadFirebase,
   userBannerController.update
 );
 
-routes.put("/usuarios/:id/perfil",
+routes.put(
+  "/usuarios/:id/perfil",
   uploadSingleImage,
   uploadFirebase,
   userPerfilrController.update
