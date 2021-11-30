@@ -42,7 +42,7 @@ routes.get("/instituicao/:id/campanhas/", campaignsController.index);
 routes.get("/instituicao/campanhas/:id", campaignsController.find);
 routes.get("/instituicao/:id/animais", animalController.index);
 routes.get("/instituicao/animais/:id", animalController.find);
-routes.get("/funcionarios", employeeController.index);
+routes.get("/instituicao/:id/funcionarios", employeeController.index);
 
 routes.put("/usuarios/:id/banner",
   uploadSingleImage,
