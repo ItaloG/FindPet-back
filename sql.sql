@@ -49,6 +49,7 @@ create table users (
     senha varchar(80) not null,
     email varchar(50) not null,
     url_foto_perfil text,
+    url_foto_banner text,
     cpf varchar(14) not null,
     logradouro varchar(40) not null,
     numero int not null,
