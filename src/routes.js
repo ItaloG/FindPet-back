@@ -38,10 +38,10 @@ routes.get("/instituicoes/:id", institutionController.find);
 routes.get("/instituicoes/:id/servicos", institutionServicesController.find);
 routes.get("/apoios", supportController.index);
 routes.get("/apoios/:id", supportController.find);
-routes.get("/campanhas", campaignsController.index);
-routes.get("/campanhas/:id", campaignsController.find);
-routes.get("/animais", animalController.index);
-routes.get("/animais/:id", animalController.find);
+routes.get("/instituicao/:id/campanhas/", campaignsController.index);
+routes.get("/instituicao/campanhas/:id", campaignsController.find);
+routes.get("/instituicao/:id/animais", animalController.index);
+routes.get("/instituicao/animais/:id", animalController.find);
 routes.get("/funcionarios", employeeController.index);
 
 routes.put("/usuarios/:id/banner",

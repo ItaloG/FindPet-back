@@ -4,6 +4,7 @@ const Campaigns = require("../models/Campaigns");
 
 module.exports = {
   async index(req, res) {
+    const { id } = req.params;
     const { institutionId } = req;
 
     try {
@@ -27,7 +28,7 @@ module.exports = {
             attributes: ["cep"],
           },
         ],
-        where: { institution_id: institutionId },
+        where: { institution_id: !institutionId ? id : institutionId },
         order: [["created_at", "DESC"]],
       });
 
@@ -37,9 +38,9 @@ module.exports = {
       res.status(500).send({ error });
     }
   },
-  async find(req, res) {
+  async find(req, res) { 
     const { id } = req.params;
-    const { institutionId } = req;
+
     try {
       const campaign = await Campaigns.findByPk(id, {
         attributes: [
@@ -62,7 +63,7 @@ module.exports = {
             attributes: ["cep"],
           },
         ],
-        where: { institution_id: institutionId },
+       
         order: [["created_at", "DESC"]],
       });
 

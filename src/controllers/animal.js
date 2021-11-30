@@ -5,7 +5,9 @@ const SpecialCondition = require("../models/SpecialCondition");
 
 module.exports = {
   async index(req, res) {
+    const { id } = req.params;
     const { institutionId } = req;
+
     try {
       let animais = await Animal.findAll({
         attributes: [
@@ -23,7 +25,7 @@ module.exports = {
             attributes: ["tipo"],
           },
         ],
-        where: { institution_id: institutionId },
+        where: { institution_id: !institutionId ? id : institutionId },
         order: [["created_at", "DESC"]],
       });
 
@@ -57,9 +59,11 @@ module.exports = {
             attributes: ["id", "nome"],
           },
         ],
+        order: [["created_at", "DESC"]],
       });
 
       res.status(201).send(animais);
+
     } catch (error) {
       console.log(error);
       return res.status(500).send(error);
