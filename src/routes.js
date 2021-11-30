@@ -26,7 +26,7 @@ const userPerfilrController = require("./controllers/userPerfil");
 
 //rotas publicas
 routes.get("/", (req, res) => {
-  res.send("Wellcome");
+  res.send({mensagem: "Wellcome"});
 });
 routes.post("/login", loginContoller.store);
 routes.post("/cadastro/usuario", userController.store);
