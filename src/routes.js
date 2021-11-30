@@ -25,6 +25,9 @@ const userBannerController = require("./controllers/userBanner");
 const userPerfilrController = require("./controllers/userPerfil");
 
 //rotas publicas
+routes.get("/", (req, res) => {
+  res.send("Wellcome");
+});
 routes.post("/login", loginContoller.store);
 routes.post("/cadastro/usuario", userController.store);
 routes.post("/cadastro/instituicao", institutionController.store);
@@ -44,13 +47,15 @@ routes.get("/animais", animalController.index);
 routes.get("/animais/:id", animalController.find);
 routes.get("/funcionarios", employeeController.index);
 
-routes.put("/usuarios/:id/banner",
+routes.put(
+  "/usuarios/:id/banner",
   uploadSingleImage,
   uploadFirebase,
   userBannerController.update
 );
 
-routes.put("/usuarios/:id/perfil",
+routes.put(
+  "/usuarios/:id/perfil",
   uploadSingleImage,
   uploadFirebase,
   userPerfilrController.update
