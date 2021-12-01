@@ -197,7 +197,7 @@ module.exports = {
       let campanha = await Campaigns.findByPk(id);
 
       if (!campanha) {
-        return res.status(404).send({ error: "Funcionario não encontra" });
+        return res.status(404).send({ error: "Campanha não encontra" });
       }
 
       campanha.titulo = titulo;
