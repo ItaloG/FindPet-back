@@ -3,6 +3,7 @@ const bcrypt = require("bcryptjs");
 const Cep = require("../models/Cep");
 const jwt = require("jsonwebtoken");
 const auth = require("../config/auth");
+const User = require("../models/User");
 
 module.exports = {
   async find(req, res) {
@@ -155,4 +156,27 @@ module.exports = {
       res.status(500).send(error);
     }
   },
+  async update(req, res) {
+
+    const { id } = req.params;
+    const {
+      nome,
+      email,
+      cep,
+      logradouro,
+      complemento,
+      numero,
+      telefone,
+      celular
+    } = req.body;
+
+    try {
+      
+      let user = awit
+
+    } catch (error) {
+      
+    }
+
+  }
 };
