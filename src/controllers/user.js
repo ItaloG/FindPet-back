@@ -200,7 +200,7 @@ module.exports = {
 
       return res.status(200).send(user);
     } catch (error) {
-      console.log(error);
+      console.log(error); 
       res.status(500).send(error);
     }
   },
