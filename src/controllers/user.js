@@ -187,6 +187,7 @@ module.exports = {
         });
       }
 
+      user.cep_id = newCep.id;
       user.nome = nome;
       user.email = email;
       user.logradouro = logradouro;
@@ -194,6 +195,8 @@ module.exports = {
       user.numero = numero;
       user.telefone = telefone;
       user.celular = celular;
+
+      user.save();
 
       return res.status(200).send(user);
     } catch (error) {
