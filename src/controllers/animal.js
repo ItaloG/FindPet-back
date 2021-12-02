@@ -1,7 +1,6 @@
 const Animal = require("../models/Animal");
 const AnimalSpecialCondition = require("../models/AnimalSpecialCondition");
 const Institution = require("../models/institution");
-const SpecialCondition = require("../models/SpecialCondition");
 
 module.exports = {
   async index(req, res) {
@@ -63,7 +62,6 @@ module.exports = {
       });
 
       res.status(201).send(animais);
-
     } catch (error) {
       console.log(error);
       return res.status(500).send(error);
@@ -122,7 +120,14 @@ module.exports = {
     }
   },
   async update(req, res) {
-    const { nome, personalidade, idade, castrado, historia } = req.body;
+    const {
+      nome,
+      personalidade,
+      idade,
+      castrado,
+      historia,
+      condicoesEpeciais,
+    } = req.body;
 
     let firebaseUrl = "";
     if (req.file) {
@@ -136,22 +141,32 @@ module.exports = {
     }
 
     try {
-      let animal = await Animal.findByPk(id);
+      let condicoesEspeciaisDB = await AnimalSpecialCondition.findAll({
+        attributes: ["special_condition_id"],
+        where: {
+          animal_id: id,
+        },
+      });
 
-      if (!animal) {
-        return res.status(404).send({ error: "Animal não encontrado" });
-      }
+      const condicoesEpeciaisArray = condicoesEpeciais.split(",");
 
-      animal.nome = nome;
-      animal.personalidade = personalidade;
-      animal.idade = idade;
-      animal.castrado = castrado;
-      animal.historia = historia;
+      const condicoesEpeciaisAUX = condicoesEspeciaisDB.find((ce) => ce);
 
-      animal.save();
+      // let animal = await Animal.findByPk(id);
 
-      res.status(201).send(animal);
+      // if (!animal) {
+      //   return res.status(404).send({ error: "Animal não encontrado" });
+      // }
 
+      // animal.nome = nome;
+      // animal.personalidade = personalidade;
+      // animal.idade = idade;
+      // animal.castrado = castrado;
+      // animal.historia = historia;
+
+      // animal.save();
+
+      res.status(201).send(condicoesEspeciaisDB);
     } catch (error) {
       console.log(error);
       res.status(500).send(error);
@@ -169,17 +184,17 @@ module.exports = {
 
       let animalSpecialConditionRow = await AnimalSpecialCondition.findOne({
         where: {
-          animal_id: id
-        }
+          animal_id: id,
+        },
       });
 
       await animalSpecialConditionRow.destroy();
 
       const deleteAnimal = async () => {
         await animal.destroy();
-      }
+      };
       setTimeout(() => {
-        deleteAnimal()
+        deleteAnimal();
       }, 2000);
 
       return res.status(201).send({ mensagem: "Animal excluido com sucesso" });
