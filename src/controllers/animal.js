@@ -120,14 +120,7 @@ module.exports = {
     }
   },
   async update(req, res) {
-    const {
-      nome,
-      personalidade,
-      idade,
-      castrado,
-      historia,
-      condicoesEpeciais,
-    } = req.body;
+    const { nome, personalidade, idade, castrado, historia } = req.body;
 
     let firebaseUrl = "";
     if (req.file) {
@@ -141,32 +134,21 @@ module.exports = {
     }
 
     try {
-      let condicoesEspeciaisDB = await AnimalSpecialCondition.findAll({
-        attributes: ["special_condition_id"],
-        where: {
-          animal_id: id,
-        },
-      });
+      let animal = await Animal.findByPk(id);
 
-      const condicoesEpeciaisArray = condicoesEpeciais.split(",");
+      if (!animal) {
+        return res.status(404).send({ error: "Animal não encontrado" });
+      }
 
-      const condicoesEpeciaisAUX = condicoesEspeciaisDB.find((ce) => ce);
+      animal.nome = nome;
+      animal.personalidade = personalidade;
+      animal.idade = idade;
+      animal.castrado = castrado;
+      animal.historia = historia;
 
-      // let animal = await Animal.findByPk(id);
+      animal.save();
 
-      // if (!animal) {
-      //   return res.status(404).send({ error: "Animal não encontrado" });
-      // }
-
-      // animal.nome = nome;
-      // animal.personalidade = personalidade;
-      // animal.idade = idade;
-      // animal.castrado = castrado;
-      // animal.historia = historia;
-
-      // animal.save();
-
-      res.status(201).send(condicoesEspeciaisDB);
+      res.status(201).send(animal);
     } catch (error) {
       console.log(error);
       res.status(500).send(error);
