@@ -148,6 +148,7 @@ module.exports = {
         numero: user.numero,
         complemento: user.complemento,
         cep: newCep.cep,
+        tipo_usuario: "comum",
         token,
       });
     } catch (error) {

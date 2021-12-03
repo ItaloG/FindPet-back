@@ -202,6 +202,7 @@ module.exports = {
         complemento: address.complemento,
         cep: newCep.cep,
         descricao: institution.descricao,
+        tipo_usuario: "instituicao",
         token,
       });
     } catch (error) {
