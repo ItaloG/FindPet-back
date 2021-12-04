@@ -34,7 +34,7 @@ module.exports = {
             },
             {
               association: "TypeInstitution",
-              attributes: ["id","type_institution"],
+              attributes: ["id", "type_institution"],
             },
             {
               association: "AddressInstitutions",
@@ -131,7 +131,8 @@ module.exports = {
         nome: user.getDataValue("nome"),
         email: user.getDataValue("email"),
         senha: user.getDataValue("senha"),
-        url_foto_perfil: user.getDataValue("urlFotoPerfil"),
+        url_foto_perfil: user.getDataValue("url_foto_perfil"),
+        url_foto_banner: user.getDataValue("url_foto_banner"),
         cpf: user.getDataValue("cpf"),
         logradouro: user.getDataValue("logradouro"),
         numero: user.getDataValue("numero"),
