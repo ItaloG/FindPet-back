@@ -8,6 +8,8 @@ class Institution extends Model {
         email: DataTypes.STRING,
         senha: DataTypes.STRING,
         descricao: DataTypes.STRING,
+        lat: DataTypes.FLOAT,
+        lng: DataTypes.FLOAT,
         url_foto_perfil: DataTypes.TEXT,
         url_foto_banner: DataTypes.TEXT,
         cnpj: DataTypes.STRING,

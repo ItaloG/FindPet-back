@@ -3,6 +3,7 @@ const bcrypt = require("bcryptjs");
 const Cep = require("../models/Cep");
 const jwt = require("jsonwebtoken");
 const auth = require("../config/auth");
+const mapApi = require("../services/mapApi");
 
 module.exports = {
   async index(req, res) {
@@ -129,6 +130,13 @@ module.exports = {
 
       const senhaHashed = bcrypt.hashSync(senha);
 
+      const mapaResponse = await mapApi.post(
+        `json?address=${newCep.cep}&key=${process.env.API_KEY}`
+      );
+
+      const lat = mapaResponse.data.results[0].geometry.location.lat;
+      const lng = mapaResponse.data.results[0].geometry.location.lng;
+
       institution = await Institution.create({
         nome,
         email,
@@ -136,6 +144,8 @@ module.exports = {
         cnpj,
         descricao: "Inssira uma descrição para que todos saibam o que você faz",
         type_institution_id: tipoEstabelecimento,
+        lat,
+        lng,
       });
 
       let newInstitution = await Institution.findByPk(institution.id);
@@ -203,6 +213,8 @@ module.exports = {
         cep: newCep.cep,
         descricao: institution.descricao,
         tipo_usuario: "instituicao",
+        lat,
+        lng,
         token,
       });
     } catch (error) {
