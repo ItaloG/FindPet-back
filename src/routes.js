@@ -26,6 +26,9 @@ const userPerfilrController = require("./controllers/userPerfil");
 const cordenadasConstroller = require("./controllers/cordenadas");
 
 //rotas publicas
+routes.get("/", (req, res) => {
+  res.send({mensagem: "Wellcome"});
+});
 routes.post("/login", loginContoller.store);
 routes.post("/cadastro/usuario", userController.store);
 routes.post("/cadastro/instituicao", institutionController.store);
