@@ -3,7 +3,6 @@ const bcrypt = require("bcryptjs");
 const Cep = require("../models/Cep");
 const jwt = require("jsonwebtoken");
 const auth = require("../config/auth");
-const User = require("../models/User");
 
 module.exports = {
   async find(req, res) {
@@ -19,18 +18,18 @@ module.exports = {
           "url_foto_perfil",
           "logradouro",
           "complemento",
-          "numero"
+          "numero",
         ],
         include: [
           {
             association: "TelephoneUsers",
-            attributes: ["numero"]
+            attributes: ["numero"],
           },
           {
             association: "Cep",
-            attributes: ["cep"]
-          }
-        ]
+            attributes: ["cep"],
+          },
+        ],
       });
 
       return res.status(200).send(user);
@@ -149,6 +148,7 @@ module.exports = {
         numero: user.numero,
         complemento: user.complemento,
         cep: newCep.cep,
+        tipo_usuario: "comum",
         token,
       });
     } catch (error) {
@@ -157,7 +157,6 @@ module.exports = {
     }
   },
   async update(req, res) {
-
     const { id } = req.params;
     const {
       nome,
@@ -167,16 +166,43 @@ module.exports = {
       complemento,
       numero,
       telefone,
-      celular
+      celular,
     } = req.body;
 
     try {
-      
-      let user = awit
+      let user = await User.findByPk(id);
 
+      if (!user) {
+        return res.status(404).send({ error: "Usuário não encontrado" });
+      }
+
+      let newCep = await Cep.findOne({
+        where: {
+          cep: cep,
+        },
+      });
+
+      if (!newCep) {
+        newCep = await Cep.create({
+          cep,
+        });
+      }
+
+      user.cep_id = newCep.id;
+      user.nome = nome;
+      user.email = email;
+      user.logradouro = logradouro;
+      user.complemento = complemento;
+      user.numero = numero;
+      user.telefone = telefone;
+      user.celular = celular;
+
+      user.save();
+
+      return res.status(200).send(user);
     } catch (error) {
-      
+      console.log(error); 
+      res.status(500).send(error);
     }
-
-  }
+  },
 };

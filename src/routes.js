@@ -23,6 +23,7 @@ const typeAnimalController = require("./controllers/typeAnimal");
 const specialConditionController = require("./controllers/specialCondition");
 const userBannerController = require("./controllers/userBanner");
 const userPerfilrController = require("./controllers/userPerfil");
+const cordenadasConstroller = require("./controllers/cordenadas");
 
 //rotas publicas
 routes.post("/login", loginContoller.store);
@@ -32,6 +33,8 @@ routes.get("/tipoInstituicoes", typeInstitution.index);
 
 //rotas privadas
 routes.use(authUser);
+
+routes.get("/cordenadas", cordenadasConstroller.index);
 
 routes.get("/usuarios/:id", userController.find);
 
