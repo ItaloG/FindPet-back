@@ -19,9 +19,7 @@ module.exports = {
         order: [["created_at", "DESC"]],
       });
 
-      res.status(200).send({
-        institutions,
-      });
+      res.status(200).send(institutions);
     } catch (error) {
       console.log(error);
       res.status(500).send({ error });
