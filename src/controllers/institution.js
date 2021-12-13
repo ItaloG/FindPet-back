@@ -9,7 +9,7 @@ module.exports = {
   async index(req, res) {
     try {
       const institutions = await Institution.findAll({
-        attributes: ["id", "nome", "url_foto_perfil", "url_foto_banner"],
+        attributes: ["id", "nome", "url_foto_perfil", "url_foto_banner", "lat", "lng"],
         include: [
           {
             association: "TypeInstitution",
@@ -39,6 +39,9 @@ module.exports = {
           "email",
           "url_foto_banner",
           "url_foto_perfil",
+          "lat", 
+          "lng",
+          "descricao"
         ],
         include: [
           {
