@@ -145,7 +145,7 @@ module.exports = {
         email,
         senha: senhaHashed,
         cnpj,
-        descricao: "Inssira uma descrição para que todos saibam o que você faz",
+        descricao: "Insira uma descrição para que todos saibam o que você faz.",
         type_institution_id: tipoEstabelecimento,
         lat,
         lng,
