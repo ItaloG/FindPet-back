@@ -8,7 +8,7 @@ class Campaigns extends Model {
         logradouro: DataTypes.STRING,
         complemento: DataTypes.STRING,
         url_foto: DataTypes.TEXT,
-        cidade: DataTypes.TEXT,
+        cidade: DataTypes.STRING,
         titulo: DataTypes.STRING,
         descricao: DataTypes.STRING,
         data_inicio: DataTypes.DATE,

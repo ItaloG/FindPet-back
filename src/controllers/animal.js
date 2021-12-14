@@ -24,7 +24,7 @@ module.exports = {
             attributes: ["tipo"],
           },
         ],
-        where: { institution_id: !institutionId ? id : institutionId },
+        where: { institution_id: id ? id : institutionId },
         order: [["created_at", "DESC"]],
       });
 

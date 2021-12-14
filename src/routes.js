@@ -38,16 +38,19 @@ routes.get("/cordenadas", cordenadasConstroller.index);
 
 routes.get("/usuarios/:id", userController.find);
 
+routes.get("/apoios", supportController.index);
+routes.get("/apoios/:id", supportController.find);
+
 routes.get("/instituicoes", institutionController.index);
 routes.get("/instituicoes/:id", institutionController.find);
 routes.get("/instituicoes/:id/servicos", institutionServicesController.find);
-routes.get("/apoios", supportController.index);
-routes.get("/apoios/:id", supportController.find);
+
 routes.get("/instituicao/:id/campanhas/", campaignsController.index);
 routes.get("/instituicao/campanhas/:id", campaignsController.find);
 routes.get("/instituicao/:id/animais", animalController.index);
 routes.get("/instituicao/animais/:id", animalController.find);
 routes.get("/instituicao/:id/funcionarios", employeeController.index);
+
 
 routes.put("/usuarios/:id", userController.update);
 
@@ -70,6 +73,14 @@ routes.use(authInstitution);
 routes.get("/instituicoes", institutionController.index);
 routes.get("/instituicoes/:id", institutionController.find);
 routes.get("/instituicoes/:id/servicos", institutionServicesController.find);
+
+routes.get("/instituicao/:id/campanhas/", campaignsController.index);
+routes.get("/instituicao/campanhas/:id", campaignsController.find);
+routes.get("/instituicao/:id/animais", animalController.index);
+routes.get("/instituicao/animais/:id", animalController.find);
+
+routes.get("/instituicao/:id/funcionarios", employeeController.index);
+
 routes.get("/apoios", supportController.index);
 routes.get("/apoios/:id", supportController.find);
 routes.get("/campanhas", campaignsController.index);
