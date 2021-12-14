@@ -48,7 +48,7 @@ module.exports = {
             attributes: ["cargo"],
           },
         ],
-        where: { institution_id: !institutionId ? id : institutionId },
+        where: { institution_id: id ? id : institutionId },
       });
 
       res.status(201).send(funcionarios);
