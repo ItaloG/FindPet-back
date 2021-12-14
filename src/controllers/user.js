@@ -18,18 +18,18 @@ module.exports = {
           "url_foto_perfil",
           "logradouro",
           "complemento",
-          "numero"
+          "numero",
         ],
         include: [
           {
             association: "TelephoneUsers",
-            attributes: ["numero"]
+            attributes: ["numero"],
           },
           {
             association: "Cep",
-            attributes: ["cep"]
-          }
-        ]
+            attributes: ["cep"],
+          },
+        ],
       });
 
       return res.status(200).send(user);
@@ -148,10 +148,60 @@ module.exports = {
         numero: user.numero,
         complemento: user.complemento,
         cep: newCep.cep,
+        tipo_usuario: "comum",
         token,
       });
     } catch (error) {
       console.log(error);
+      res.status(500).send(error);
+    }
+  },
+  async update(req, res) {
+    const { id } = req.params;
+    const {
+      nome,
+      email,
+      cep,
+      logradouro,
+      complemento,
+      numero,
+      telefone,
+      celular,
+    } = req.body;
+
+    try {
+      let user = await User.findByPk(id);
+
+      if (!user) {
+        return res.status(404).send({ error: "Usuário não encontrado" });
+      }
+
+      let newCep = await Cep.findOne({
+        where: {
+          cep: cep,
+        },
+      });
+
+      if (!newCep) {
+        newCep = await Cep.create({
+          cep,
+        });
+      }
+
+      user.cep_id = newCep.id;
+      user.nome = nome;
+      user.email = email;
+      user.logradouro = logradouro;
+      user.complemento = complemento;
+      user.numero = numero;
+      user.telefone = telefone;
+      user.celular = celular;
+
+      user.save();
+
+      return res.status(200).send(user);
+    } catch (error) {
+      console.log(error); 
       res.status(500).send(error);
     }
   },

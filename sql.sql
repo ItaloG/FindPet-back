@@ -40,6 +40,21 @@ INSERT INTO `services` (`servico`, `created_at`, `updated_at`) VALUES ('Venda de
 INSERT INTO `services` (`servico`, `created_at`, `updated_at`) VALUES ('Venda de ração', current_timestamp(), current_timestamp());
 INSERT INTO `services` (`servico`, `created_at`, `updated_at`) VALUES ('Castração', current_timestamp(), current_timestamp());
 
+INSERT INTO `institutions` (`id`,`nome`,`email`,`senha`,`descricao`,`lat`,`lng`,`cnpj`,`type_institution_id`,`created_at`,`updated_at`) 
+VALUES (DEFAULT,'OngDoBem','ongdobem@gmail.com','123','Inssira uma descrição para que todos saibam o que você faz','-23.5527894','-46.9950872','8724622745',1,current_timestamp(),current_timestamp());
+
+INSERT INTO `telephone_institutions` (`id`,`numero`,`created_at`,`updated_at`,`institution_id`) 
+VALUES (DEFAULT,'4546-4543',current_timestamp(),current_timestamp(),1);
+
+INSERT INTO `telephone_institutions` (`id`,`numero`,`created_at`,`updated_at`,`institution_id`) 
+VALUES (DEFAULT,'(11)98845-7428',current_timestamp(),current_timestamp(),1);
+
+INSERT INTO `ceps` (`id`, `cep`, `created_at`, `updated_at`)
+VALUES (DEFAULT, '06685-000', current_timestamp(), current_timestamp());
+
+INSERT INTO `address_institutions` (`id`,`logradouro`,`numero`,`complemento`,`cep_id`,`created_at`,`updated_at`,`institution_id`) 
+VALUES (DEFAULT,'rua iguatu',53,'','1',current_timestamp(),current_timestamp(),1);
+
 use findpet_db;
 
 create table users (
@@ -73,6 +88,8 @@ create table institutions (
     url_foto_perfil text,
     url_foto_banner text,
     descricao text,
+    lat varchar(255) NOT NULL,
+    lng varchar(255) NOT NULL, 
     created_at datetime,
     updated_at datetime,
     unique key (id),
