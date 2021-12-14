@@ -4,7 +4,7 @@ module.exports = {
   async index(req, res) {
     try {
       const cordenadas = await Institution.findAll({
-        attributes: ["nome", "lat", "lng"],
+        attributes: ["id", "nome", "lat", "lng"],
         include: [
           {
             association: "TypeInstitution",
