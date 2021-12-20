@@ -1,7 +1,7 @@
 const Sequelize = require("sequelize");
 const dbConfig = require("../config/database");
 
-const Institution = require("../models/institution");
+const Institution = require("../models/Institution");
 const TelephoneInstitution = require("../models/TelephoneInstitution");
 const AddressInstitution = require("../models/AddressInsitution");
 const Support = require("../models/Support");
