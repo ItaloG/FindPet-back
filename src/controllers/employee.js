@@ -1,5 +1,5 @@
 const Employee = require("../models/Employee");
-const Institution = require("../models/institution");
+const Institution = require("../models/Institution");
 const sequelize = require("sequelize");
 
 module.exports = {
