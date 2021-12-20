@@ -1,5 +1,5 @@
 const User = require("../models/User");
-const Institution = require("../models/institution");
+const Institution = require("../models/Institution");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const auth = require("../config/auth");

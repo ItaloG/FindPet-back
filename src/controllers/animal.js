@@ -1,6 +1,6 @@
 const Animal = require("../models/Animal");
 const AnimalSpecialCondition = require("../models/AnimalSpecialCondition");
-const Institution = require("../models/institution");
+const Institution = require("../models/Institution");
 
 module.exports = {
   async index(req, res) {

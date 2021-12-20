@@ -1,4 +1,4 @@
-const Institution = require("../models/institution");
+const Institution = require("../models/Institution");
 
 module.exports = {
   async index(req, res) {

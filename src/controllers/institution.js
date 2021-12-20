@@ -1,4 +1,4 @@
-const Institution = require("../models/institution");
+const Institution = require("../models/Institution");
 const bcrypt = require("bcryptjs");
 const Cep = require("../models/Cep");
 const jwt = require("jsonwebtoken");

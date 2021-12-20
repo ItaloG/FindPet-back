@@ -1,4 +1,4 @@
-const Institution = require("../models/institution");
+const Institution = require("../models/Institution");
 const Support = require("../models/Support");
 
 module.exports = {

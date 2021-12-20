@@ -1,4 +1,4 @@
-const Institution = require("../models/institution");
+const Institution = require("../models/Institution");
 const Cep = require("../models/Cep");
 const Campaigns = require("../models/Campaigns");
 

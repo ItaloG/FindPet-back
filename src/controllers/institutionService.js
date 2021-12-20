@@ -1,5 +1,4 @@
 const InstitutionService = require("../models/InstitutionService");
-const { find } = require("./institution");
 
 module.exports = {
   async store(req, res) {
